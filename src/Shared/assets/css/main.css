@@ -1,0 +1,109 @@
+:root {
+    --main-color: #1F2B57;
+    --second-color: #D3E5FF;
+    --light-blue: #ebf2fd;
+}
+
+body {
+    color: rgb(58, 58, 58);
+}
+
+a {
+    text-decoration: none;
+}
+
+.bg-main {
+    background-color: var(--main-color);
+}
+
+.bg-second {
+    background-color: var(--second-color);
+}
+
+.bg-light-blue {
+    background-color: var(--light-blue);
+}
+
+.table-header {
+    border: solid 1px silver;
+}
+
+.menu-link {
+    color: var(--second-color);
+    text-decoration: none;
+}
+
+.menu-link:hover {
+    color:  #ffffff;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.search-icon {
+    margin-left: -30px; 
+}
+
+.btn-orange {  
+    background: #FA744A;
+    color: #fff;
+}
+
+.btn-orange:hover {
+    color: #fff;
+    background: #e46a45;
+}
+
+.text-orange {
+    color: #FA744A;
+}
+
+.ficha-picture {
+    width: 140px;
+    height: auto;
+}
+
+.mask:hover {
+    opacity: 75%;
+    transition: all 0.3s ease;
+}
+
+@media only screen and (min-width : 1024px) {
+    #sale_price {
+        width: 120px;
+    }
+}    
+
+@media only screen and (max-width : 1024px) {
+    #sale_price {
+        width: 80px;
+    }
+}    
+
+@media only screen and (max-width : 576px) {
+    .search-panel {
+        display: none;
+    }
+
+    .element-header {
+        display: none;
+    }
+
+    .element-item {
+        width: 100%;
+    }
+
+    body {
+        font-size: 16px;
+    }
+
+    .shorten {
+        display: none;
+    }
+
+    #sale_price {
+        width: 62px;
+    }
+
+}
