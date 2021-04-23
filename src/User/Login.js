@@ -1,14 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import PasswordInput from './PasswordInput';
 
-const showPwd = (e) => {
-    e.target.classList.toggle('fa-eye-slash');
-    const $pwd =  document.getElementById('pwd');
-    let type = $pwd.getAttribute('type') == 'password' ? 'text' : 'password'
-    $pwd.setAttribute('type', type);
-}
 
 export default function Login() {
+
     return (
 
         <main className="bg-second mx-auto p-4" style={{maxWidth: "600px", marginTop: "100px"}}>
@@ -31,22 +27,7 @@ export default function Login() {
                 </div>
 
                 <div className="mt-4">
-                    <label htmlFor="pwd" className="form-label">Contraseña</label>
-                    <input 
-                        type="password" 
-                        name="pwd" 
-                        id="pwd" 
-                        className="form-control d-inline"
-                        maxLength="64"
-                    />
-                    <i 
-                       className="fa fa-eye d-inline" 
-                       style={{marginLeft: "-30px"}} 
-                       title="Mostrar / Ocultar" 
-                       data-bs-toggle="tooltip" 
-                       data-bs-placement="top"
-                       onClick={showPwd}>
-                    </i>
+                    <PasswordInput label="Contraseña" name="pwd" />
                 </div>
 
                 <div className="mt-5">
