@@ -25,18 +25,6 @@ const Header = () => (
                 
                 <ul className="navbar-nav flex-row flex-wrap bd-navbar-nav pt-2 py-md-0">
                   <Navigation rol="user" active="Fichas de costo" />
-                  {/* <li className="nav-item col-6 col-md-auto">
-                    <a className="nav-link p-2 active" aria-current="true" href="/">Inicio</a>
-                  </li>
-                  <li className="nav-item col-6 col-md-auto">
-                    <a className="nav-link p-2" href="/">Fichas de costo</a>
-                  </li>
-                  <li className="nav-item col-6 col-md-auto">
-                    <a className="nav-link p-2"  href="/">Elementos</a>
-                  </li>
-                  <li className="nav-item col-6 col-md-auto">
-                    <a className="nav-link p-2" href="/">Configuración</a>
-                  </li> */}
                 </ul>
                 
                 <hr className="d-md-none text-white-50" />
@@ -56,17 +44,17 @@ const Header = () => (
 
                     <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                         <li>
-                            <a className="dropdown-item" href="#">
+                            <a className="dropdown-item" href="/">
                                 <i className="fa fa-user"></i> Perfil
                             </a>
                         </li>
                         <li>
-                            <a className="dropdown-item" href="#">
+                            <a className="dropdown-item" href="/">
                                 <i className="fa fa-key"></i> Contraseña
                             </a>
                         </li>
                         <li>
-                            <a className="dropdown-item" href="#">
+                            <a className="dropdown-item" href="/">
                                 <i className="fa fa-times-circle"></i> Cerrar sesión
                             </a>
                         </li>

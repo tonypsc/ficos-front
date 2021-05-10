@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-export default function PasswordInput({label, name, autoFocus}) {
+export default function PasswordInput({label, name, autoFocus, changeHandler}) {
 
     const refInput = useRef(),
         refBtn = useRef();
@@ -22,9 +22,10 @@ export default function PasswordInput({label, name, autoFocus}) {
                 maxLength="64"
                 autoFocus={autoFocus}
                 ref={refInput}
+                onChange={changeHandler}
             />
             <i 
-                className="fa fa-eye d-inline" 
+                className="fa fa-eye d-inline cursor-pointer" 
                 style={{marginLeft: "-30px"}}
                 onClick={handleShowPwd}
                 ref={refBtn}

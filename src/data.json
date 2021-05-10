@@ -1,0 +1,31 @@
+{
+    "users": [
+        {
+            "_id": "0", 
+            "username": "sa",
+            "fullname": "Yo mismo",
+            "password": "rreqerq344wrqerqwrqrqwer",
+            "email": "tonyps@live.com",
+            "created": "2020-12-14",
+            "rol": "sa"
+        },
+        {
+            "_id": "1", 
+            "username": "admincali",
+            "fullname": "Pedro Macario Hernández",
+            "password": "rreqerq344wrqerqwrqrqwer",
+            "email": "tonyps@gmail.com",
+            "created": "2020-10-14",
+            "rol": "admin"
+        },
+        {
+            "_id": "2", 
+            "username": "usercali",
+            "fullname": "Anacleto Usuario",
+            "password": "rreqerq344wrqerqwrqrqwer",
+            "email": "tony402@gmail.com",
+            "created": "2021-10-14",
+            "rol": "user"
+        }
+    ]
+}
