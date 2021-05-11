@@ -23,6 +23,7 @@ export default function PasswordInput({label, name, autoFocus, changeHandler}) {
                 autoFocus={autoFocus}
                 ref={refInput}
                 onChange={changeHandler}
+                required
             />
             <i 
                 className="fa fa-eye d-inline cursor-pointer" 

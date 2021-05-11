@@ -25,15 +25,21 @@ export default function Login() {
         } else {
             setError(null);
             localStorage.setItem('token', result.token);
-            localStorage.setItem('user', JSON.stringify(result.user));
-            history.push('/costsheet')
+            localStorage.setItem('user', JSON.stringify(result.data));
+            
+            // sa goes to enterprises
+            if(result.data.rol === 'sa') {
+                history.push('/enterprise')
+            } else { // goes to costsheet
+                history.push('/costsheet')
+            }
         }
     }
 
     return (
 
         <main className="bg-second mx-auto p-4" style={{maxWidth: "600px", marginTop: "100px"}}>
-            <img src="img/logo.png" alt="" style={{float: "right",  width: "48px"}}/>
+            <img src={require('../Shared/assets/img/logo.png').default} alt="" style={{float: "right",  width: "48px"}}/>
             <h3>Inicio de sesión</h3>
             <h5 className="fw-light">¡Hola empecemos!</h5>
 

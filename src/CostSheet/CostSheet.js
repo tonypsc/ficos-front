@@ -16,7 +16,7 @@ const CostSheet = () => {
 
     return(
         <>
-            <Header />
+            <Header active="Fichas de costo"/>
 
             <main className="container-xxl">
                 <div className="row">

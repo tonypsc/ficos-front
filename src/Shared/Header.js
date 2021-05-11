@@ -1,11 +1,12 @@
 import React from 'react';
-import logo from './assets/img/logo.jpg'
-import ficos from './assets/img/ficos.png'
-import mail from './assets/img/mail.png'
-import user from './assets/img/user.png'
-import Navigation from './Navigation'
+import {Link} from 'react-router-dom';
+import logo from './assets/img/logo.jpg';
+import ficos from './assets/img/ficos.png';
+import mail from './assets/img/mail.png';
+import user from './assets/img/user.png';
+import Navigation from './Navigation';
 
-const Header = () => (
+const Header = ({active}) => (
 
     <header className="navbar navbar-expand-md navbar-dark bd-navbar bg-main text-white">
         <nav className="container-xxl flex-wrap flex-md-nowrap" aria-label="Main navigation">
@@ -24,7 +25,7 @@ const Header = () => (
             <div className="collapse navbar-collapse ms-3" id="bdNavbar">
                 
                 <ul className="navbar-nav flex-row flex-wrap bd-navbar-nav pt-2 py-md-0">
-                  <Navigation rol="user" active="Fichas de costo" />
+                  <Navigation rol={JSON.parse(localStorage.user).rol} active={active} />
                 </ul>
                 
                 <hr className="d-md-none text-white-50" />
@@ -54,9 +55,9 @@ const Header = () => (
                             </a>
                         </li>
                         <li>
-                            <a className="dropdown-item" href="/">
+                            <Link className="dropdown-item" to="/logout">
                                 <i className="fa fa-times-circle"></i> Cerrar sesión
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                     </li>

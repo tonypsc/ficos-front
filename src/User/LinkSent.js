@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function LinkSent() {
     return (
@@ -12,7 +13,7 @@ export default function LinkSent() {
             </p>
 
             <div className="mt-5">
-                <button type="submit" className="btn btn-primary w-100">Aceptar</button>
+                <Link to="/login" className="btn btn-primary w-100">Iniciar sesión</Link>
             </div>
         </main>
 
