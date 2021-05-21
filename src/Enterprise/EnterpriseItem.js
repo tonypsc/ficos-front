@@ -1,4 +1,5 @@
 import React from 'react';
+import config from '../Shared/config/general';
 
 export default function EnterpriseItem({enterprise}) {
 
@@ -9,7 +10,7 @@ export default function EnterpriseItem({enterprise}) {
             <div style={{width: "128px"}}>
                 {
                     logo 
-                        ? <img src={require('../Shared/assets/img/logo.png').default} alt="logo" />
+                        ? <img src={config.apiUrl + 'uploads/' + logo } alt="logo" style={{width: "100%"}} onError={(e)=> e.target.src=require('../Shared/assets/img/logo.jpg').default} />
                         : <i className="fa fa-home fa-6x"></i>
                 }
             </div>
@@ -37,8 +38,7 @@ export default function EnterpriseItem({enterprise}) {
                 </div>
                 <div className="mt-2">
                     <button className="btn btn-success btn-sm" ><i className="fa fa-edit"></i> Editar</button>
-                    <button className="btn btn-orange btn-sm mx-2" ><i className="fa fa-times"></i> Eliminar</button>
-                    <button className="btn btn-secondary btn-sm" ><i className="fa fa-user"></i> Usuarios</button>
+                    <button className="btn btn-orange btn-sm ms-2" ><i className="fa fa-times"></i> Eliminar</button>
                 </div>
             </div>
         </div>

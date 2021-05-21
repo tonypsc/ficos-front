@@ -69,6 +69,19 @@ a {
     transition: all 0.3s ease;
 }
 
+.alert-close {
+    opacity: 50%;
+    transition: all 0.1s ease;
+}
+
+.alert-close:hover {
+    opacity: 100%;
+}
+
+.alert-close:active {
+    font-weight: bold;
+}
+
 @media only screen and (min-width : 1024px) {
     #sale_price {
         width: 120px;

@@ -1,0 +1,15 @@
+.img-select {
+    height: inherit;
+    width: auto;
+    max-height: 100%;
+    max-width: 100%;
+    margin: auto;
+    display: block;
+    padding: 10px;
+    cursor: pointer;
+    transition: opacity .3s ease
+}
+
+.img-select:hover{
+    opacity: 80%;
+}

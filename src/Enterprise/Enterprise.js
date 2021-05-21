@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../Shared/Header';
 import SearchBox from '../Shared/SearchBox';
 import EnterpriseList from './EnterpriseList';
@@ -22,7 +23,7 @@ export default function Enterprises() {
                                 </form>
                             </div>
                             <div className="" style={{width: "130px"}}>
-                                <button type="submit" className="btn btn-primary w-100"> <i className="fa fa-plus"></i> Agregar</button>
+                                <Link to="/enterprise/add" className="btn btn-primary w-100"> <i className="fa fa-plus"></i> Agregar</Link>
                             </div>
                         </div>
 

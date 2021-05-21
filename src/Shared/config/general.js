@@ -14,7 +14,8 @@ export default {
             'Usuarios'
         ],
         'sa': [
-            'Empresas'
+            'Empresas',
+            'Usuarios'
         ]
     },
     apiUrl: 'http://localhost:3002/',

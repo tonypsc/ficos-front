@@ -1,16 +1,18 @@
-export async function fetchData (url, method = 'GET', body = null) {
+export async function fetchData (url, method = 'GET', body = null, appJson = true) {
     const token = localStorage.getItem('token');
-
     try {
         const options = {
             method,
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + token
-            }
+            },
+            body
         }
 
-        if(body) options.body = JSON.stringify(body);
+        if(appJson) {
+            options.headers['Content-Type'] = 'application/json';
+            if(body) options.body = JSON.stringify(body);
+        }
 
         const res = await fetch(url, options);
 
