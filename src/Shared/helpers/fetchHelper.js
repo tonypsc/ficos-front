@@ -18,8 +18,8 @@ export async function fetchData (url, method = 'GET', body = null, appJson = tru
 
         return await res.json();
     } catch (err) {
-        return {status: 'error', errors: err};
-        //return {status: 'error', errors: ['Ocurrieron errores al procesar la petición.']};
+        //return {status: 'error', errors: err.message};
+        return {status: 'error', errors: 'Ocurrieron errores al procesar la petición.'};
     }
 
 }

@@ -119,4 +119,7 @@ a {
         width: 62px;
     }
 
+    .hide {
+        display: none;
+    }
 }
