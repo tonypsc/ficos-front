@@ -46,30 +46,20 @@ export default function AddEnterprise() {
 
     return(
         <>
-            <Header active="Empresas"/>
+            <h3 className="">Registro de empresa</h3>
 
-            <main className="container-xxl">
-                <div className="row">
-                    <div className="col p-4">
-                        
-                        <h3 className="">Registro de empresa</h3>
+            <hr className="py-0"/>
 
-                        <hr className="py-0"/>
+            {error &&
+                <Alert 
+                    type="error" 
+                    content={error} 
+                    closeButton="true"
+                    unSetError={setError}
+                />
+            }
 
-                        {error &&
-                            <Alert 
-                                type="error" 
-                                content={error} 
-                                closeButton="true"
-                                unSetError={setError}
-                            />
-                        }
-
-                        <EnterpriseForm changeHandler={changeHandler} submitHandler={submitHandler} logo={logo}/>
-                        
-                    </div>
-                </div>
-            </main>
+            <EnterpriseForm changeHandler={changeHandler} submitHandler={submitHandler} logo={logo}/>
         </>
     )
 
