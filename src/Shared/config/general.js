@@ -19,5 +19,6 @@ export default {
         ]
     },
     apiUrl: 'http://localhost:3002/',
-    paginationPages:8
+    paginationSize: 8, // Pages to show to left or right of current page
+    itemsPerPage: 4
 }

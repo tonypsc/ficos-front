@@ -7,7 +7,9 @@ import LinkSent from './User/LinkSent';
 import SetPwd from './User/SetPwd';
 import PrivateRoute from './PrivateRoute';
 import Enterprise from './Enterprise/Enterprise';
+import Enterprises from './Enterprise/Enterprises';
 import AddEnterprise from './Enterprise/AddEnterprise';
+import EditEnterprise from './Enterprise/EditEnterprise';
 
 const App = () => (
   <BrowserRouter>
@@ -22,8 +24,9 @@ const App = () => (
         }} /> 
       <PrivateRoute exact path={"/costsheet"} component={CostSheet} /> 
       <PrivateRoute exact path={"/costelement"} component={CostElement} /> 
-      <PrivateRoute exact path={"/enterprise"} component={Enterprise} /> 
+      <PrivateRoute exact path={"/enterprise"} component={Enterprises} /> 
       <PrivateRoute exact path={"/enterprise/add"} component={AddEnterprise} /> 
+      <PrivateRoute exact path={"/enterprise/edit"} component={EditEnterprise} /> 
       <Route component={Login} />
     </Switch>
   </BrowserRouter>

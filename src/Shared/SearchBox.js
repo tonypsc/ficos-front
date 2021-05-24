@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function SearchBox({placeHolder, handleChange}) {
+export default function SearchBox({placeHolder, handleChange, handleSubmit}) {
     return(
         <div className="form-group">
             <input 
@@ -11,7 +11,7 @@ export default function SearchBox({placeHolder, handleChange}) {
                 placeholder={placeHolder + "..."}
                 onChange={handleChange}
             />
-            <i className="fa fa-search d-inline text-muted cursor-pointer search-icon"></i>
+            <i className="fa fa-search d-inline text-muted cursor-pointer search-icon" onClick={handleSubmit}></i>
         </div>                                
     )
 }

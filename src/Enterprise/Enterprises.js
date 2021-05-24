@@ -20,6 +20,27 @@ export default function Enterprises() {
     const [totalRecords, setTotalRecords] = useState(0);
     const [page, setPage] = useState(1);
     const location = useLocation();
+    const [mode, setMode] = useState('list');
+
+
+    const getContent = ()=> {
+        switch(mode) {
+            case 'add':
+                return('add');
+            case 'edit':
+                return('edit')
+            default:
+                return(
+                    enterprises
+                    ?
+                        <>
+                            <EnterpriseList enterprises={enterprises} handleDelete={handleDelete} page={page} search={search} />
+                            <Pagination page={page} total={totalRecords} url={config.apiUrl + 'enterprise'} handleClick={handlePaginationClick} />
+                        </>
+                    : <Loading />
+                )
+        }
+    }
 
     const getData = async () => {
         const url = `${config.apiUrl}enterprises?search=${search}&page=${page}&limit=${config.itemsPerPage}`;
@@ -122,14 +143,7 @@ export default function Enterprises() {
                         
                         {error
                             ?   <Alert content={error} />
-                            : 
-                                    enterprises
-                                        ?
-                                            <>
-                                                <EnterpriseList enterprises={enterprises} handleDelete={handleDelete} page={page} search={search} />
-                                                <Pagination page={page} total={totalRecords} url={config.apiUrl + 'enterprise'} handleClick={handlePaginationClick} />
-                                            </>
-                                        : <Loading />
+                            :  getContent()
                         }  
                         
                     </div>

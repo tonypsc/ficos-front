@@ -5,6 +5,7 @@ import EnterpriseForm from './EnterpriseForm';
 import { fetchData } from '../Shared/helpers/fetchHelper';
 import config from '../Shared/config/general';
 import Alert from '../Shared/Alert';
+import logo from '../Shared/assets/img/logo_placeholder.jpg';
 
 export default function AddEnterprise() {
 
@@ -64,7 +65,7 @@ export default function AddEnterprise() {
                             />
                         }
 
-                        <EnterpriseForm changeHandler={changeHandler} submitHandler={submitHandler}/>
+                        <EnterpriseForm changeHandler={changeHandler} submitHandler={submitHandler} logo={logo}/>
                         
                     </div>
                 </div>

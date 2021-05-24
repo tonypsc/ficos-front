@@ -1,22 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import config from '../Shared/config/general';
+import dateHelper from '../Shared/helpers/dateHelper';
 
-export default function EnterpriseItem({enterprise}) {
+export default function EnterpriseItem({enterprise, handleDelete, page, search}) {
 
-    const {name, logo, status, user, expireDate} = enterprise;
-
-    function getExpireDate(expDate) {
-        let date = new Date(expDate);
-        return date.getDate().toString().padStart(2, '0') 
-                + '-' + (date.getMonth() + 1).toString().padStart(2, '0') 
-                + '-' + date.getFullYear();
-    }
-
-    function getDaysLeft(expDate) {
-        let diff = expDate - Date.now();
-        let daysLeft = diff/1000/60/60/24;
-        return daysLeft;
-    }
+    const {_id, name, logo, status, user, expireDate} = enterprise;
 
     return(
         <div className="row m-0 mt-1 py-2 border-bottom">
@@ -39,18 +28,18 @@ export default function EnterpriseItem({enterprise}) {
                 </div>
             </div>
             <div className="col-auto text-end">
-                Licencia: {getExpireDate(expireDate)}
+                Licencia: {dateHelper.getDateFromUts(expireDate)}
                 <div className="text-muted lh-1">
                     <small>
-                        ({getDaysLeft(expireDate) <= 0
+                        ({dateHelper.getDaysLeft(expireDate) <= 0
                             ? <span className="text-danger">Licencia expirada</span>
-                            : Math.ceil(getDaysLeft(expireDate)) + ' días'
+                            : Math.ceil(dateHelper.getDaysLeft(expireDate)) + ' días'
                         })
                     </small>
                 </div>
                 <div className="mt-2">
-                    <button className="btn btn-success btn-sm" ><i className="fa fa-edit"></i> Editar</button>
-                    <button className="btn btn-orange btn-sm ms-2" ><i className="fa fa-times"></i> Eliminar</button>
+                    <Link to={`/enterprise/edit?_id=${_id}&page=${page}&search=${search}`}  className="btn btn-success btn-sm" ><i className="fa fa-edit"></i> Editar</Link>
+                    <button className="btn btn-orange btn-sm ms-2" data-id={_id} onClick={handleDelete} ><i className="fa fa-times"></i> Eliminar</button>
                 </div>
             </div>
         </div>

@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import './assets/css/FileInput.css';
+import errorImg from './assets/img/logo_placeholder.jpg';
 
-export default function FileInput({name, changeHandler}) {
+export default function FileInput({name, changeHandler, defaultValue}) {
     
     const fileInput = useRef();
     const image = useRef();
@@ -29,11 +30,12 @@ export default function FileInput({name, changeHandler}) {
                 onChange={changeHandler}
             />
                 <img
-                    src={require('./assets/img/Frame.png').default} 
+                    src={defaultValue} 
                     alt="" 
                     className="img-select" 
                     onClick={handleClick}
                     ref={image}
+                    onError={(e)=> e.target.src=errorImg}
                 />
                 
         </>

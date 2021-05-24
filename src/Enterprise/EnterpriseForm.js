@@ -1,10 +1,7 @@
 import React from 'react';
 import FileInput from '../Shared/FileInput';
 
-
 export default function EnterpriseForm({name, logo, expireDate, status, changeHandler, submitHandler}) {
-
-    //let expireDateString = `${expireDate.getFullYear()}-${(expireDate.getMonth() + 1).toString().padStart(2, '0')}-${expireDate.getDate().toString().padStart(2, '0')}`;
 
     return(
         <>
@@ -32,7 +29,7 @@ export default function EnterpriseForm({name, logo, expireDate, status, changeHa
                         name="expire_date" 
                         id="expire_date" 
                         className="form-control" 
-                        defaultValue={''} 
+                        defaultValue={expireDate} 
                         onChange={changeHandler}
                     />
                 </div>
@@ -41,10 +38,10 @@ export default function EnterpriseForm({name, logo, expireDate, status, changeHa
                         <input 
                             className="form-check-input" 
                             type="checkbox" 
-                            defaultValue={status} 
+                            defaultChecked={status} 
                             id="active" 
                             name="active" 
-                            onChange={changeHandler}
+                            onClick={changeHandler}
                         />
                         <label className="form-check-label" htmlFor="active">Activa</label>
                     </div>                    
