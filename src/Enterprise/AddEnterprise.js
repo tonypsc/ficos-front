@@ -46,7 +46,6 @@ export default function AddEnterprise() {
             setError(result.errors);
         } else {
             setError(null);
-            localStorage.setItem('page', 1);
             history.push('/enterprise');
         }
     }

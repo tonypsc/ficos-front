@@ -16,8 +16,6 @@ export default function EditEnterprise() {
     const location = useLocation();
 
     const _id = new URLSearchParams(location.search).get('_id');
-    const page = new URLSearchParams(location.search).get('page');
-    const search = new URLSearchParams(location.search).get('search');
 
     function changeHandler(e) {
 
@@ -52,7 +50,10 @@ export default function EditEnterprise() {
             }
         } 
 
-        history.push('/enterprise');
+        const page = new URLSearchParams(location.search).get('page');
+        const search = new URLSearchParams(location.search).get('search');
+    
+        history.push(`/enterprise?page=${page}&search=${search}`);
 
     }
 

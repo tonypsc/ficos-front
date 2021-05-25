@@ -1,21 +1,21 @@
 export default {
     'menu': {
         'user' : [
-            'Inicio',
-            'Fichas de costo',
-            'Elementos',
-            'Configuración'                
+            {caption: 'Inicio', link: 'home'},
+            {caption: 'Fichas de costo', link: 'costsheet'},
+            {caption: 'Elementos', link: 'element'},
+            {caption: 'Configuración', link: 'configuration'},
         ],
         'admin' : [
-            'Inicio',
-            'Fichas de costo',
-            'Elementos',
-            'Configuración',
-            'Usuarios'
+            {caption: 'Inicio', link: 'home'},
+            {caption: 'Fichas de costo', link: 'costsheet'},
+            {caption: 'Elementos', link: 'element'},
+            {caption: 'Configuración', link: 'configuration'},
+            {caption: 'Usuarios', link: 'user'},
         ],
         'sa': [
-            'Empresas',
-            'Usuarios'
+            {caption: 'Empresas', link: 'enterprise'},
+            {caption: 'Usuarios', link: 'user'},
         ]
     },
     apiUrl: 'http://localhost:3002/',

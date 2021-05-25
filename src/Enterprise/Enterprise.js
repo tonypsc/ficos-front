@@ -41,7 +41,6 @@ export default function Enterprises() {
     function  handleSubmit(e) {
         e.preventDefault();
         setSearch(searchTemp);
-        localStorage.setItem('search', searchTemp);
     }
 
     function handleDelete(e) {
@@ -69,11 +68,14 @@ export default function Enterprises() {
     }
 
     useEffect(() => {
-        const storagedPage = localStorage.getItem('page');
-        const storagedSearch = localStorage.getItem('search');
+        const queryPage = (new URLSearchParams(window.location.search)).get("page");
+        const querySearch = (new URLSearchParams(window.location.search)).get("search");
 
-        if(storagedPage) setPage(storagedPage);
-        if(storagedSearch) setSearch(storagedSearch);
+        if(queryPage) setPage(queryPage);
+        if(querySearch) {
+            console.log({querySearch});
+            setSearch(querySearch);
+        }
     }, [])
 
 
@@ -85,7 +87,6 @@ export default function Enterprises() {
 
     function handlePaginationClick(e) {
         setPage(e.target.dataset.page);
-        localStorage.setItem('page', e.target.dataset.page);
     }
 
     return(
@@ -126,7 +127,7 @@ export default function Enterprises() {
                                     enterprises
                                         ?
                                             <>
-                                                <EnterpriseList enterprises={enterprises} handleDelete={handleDelete} />
+                                                <EnterpriseList enterprises={enterprises} handleDelete={handleDelete} page={page} search={search} />
                                                 <Pagination page={page} total={totalRecords} handleClick={handlePaginationClick} />
                                             </>
                                         : <Loading />
