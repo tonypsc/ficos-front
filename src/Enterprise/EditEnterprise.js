@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import Header from '../Shared/Header';
 import EnterpriseForm from './EnterpriseForm';
 import { fetchData } from '../Shared/helpers/fetchHelper';
 import config from '../Shared/config/general';
 import Alert from '../Shared/Alert';
 import dateHelper from '../Shared/helpers/dateHelper';
 
-export default function EditEnterprise({id, setMode}) {
+export default function EditEnterprise() {
 
     const [formData, setFormData] = useState({})
     const [itemData, setItemData] = useState({});
     const [error, setError] = useState('');
+    const history = useHistory();
+    const location = useLocation();
+
+    const _id = new URLSearchParams(location.search).get('_id');
+    const page = new URLSearchParams(location.search).get('page');
+    const search = new URLSearchParams(location.search).get('search');
 
     function changeHandler(e) {
 
@@ -27,7 +35,8 @@ export default function EditEnterprise({id, setMode}) {
         const htmlFormData = new FormData();
 
         if(Object.keys(formData).length !== 0) {
-            htmlFormData.append('_id', id);
+            
+            htmlFormData.append('_id', _id);
 
             for(let item in formData) {
                 htmlFormData.append(item, formData[item]);
@@ -41,15 +50,15 @@ export default function EditEnterprise({id, setMode}) {
             } else {
                 setError(null);
             }
-        } else {
-        }
-        
-        setMode();
+        } 
+
+        history.push('/enterprise');
+
     }
 
     useEffect(() => {
         async function getData() {
-            const url = `${config.apiUrl}enterprises/${id}`;
+            const url = `${config.apiUrl}enterprises/${_id}`;
             const result = await fetchData(url, 'GET');
 
             if(result.status !== 'success') {
@@ -60,35 +69,43 @@ export default function EditEnterprise({id, setMode}) {
             }
         }
 
-        if(id) getData();
+        getData();
 
     },[])
 
     return(
         <>
-            <h3 className="">Edición de empresa</h3>
+            <Header active="Empresas"/>
 
-            <hr className="py-0"/>
+            <main className="container-xxl">
+                <div className="row">
+                    <div className="col p-4">
+                        
+                        <h3 className="">Registro de empresa</h3>
 
-            {error &&
-                <Alert 
-                    type="error" 
-                    content={error} 
-                    closeButton="true"
-                    unSetError={setError}
-                />
-            }
+                        <hr className="py-0"/>
 
-            <EnterpriseForm 
-                changeHandler={changeHandler} 
-                submitHandler={submitHandler} 
-                logo={itemData.logoUrl} 
-                name={itemData.name} 
-                expireDate={itemData.expireDate}
-                status={itemData.status}
-                setMode={setMode}
-            />
-            
+                        {error &&
+                            <Alert 
+                                type="error" 
+                                content={error} 
+                                closeButton="true"
+                                unSetError={setError}
+                            />
+                        }
+
+                        <EnterpriseForm 
+                            changeHandler={changeHandler} 
+                            submitHandler={submitHandler} 
+                            logo={itemData.logoUrl} 
+                            name={itemData.name} 
+                            expireDate={itemData.expireDate}
+                            status={itemData.status}
+                        />
+                        
+                    </div>
+                </div>
+            </main>
         </>
     )
 

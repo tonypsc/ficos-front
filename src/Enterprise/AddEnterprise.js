@@ -6,12 +6,18 @@ import { fetchData } from '../Shared/helpers/fetchHelper';
 import config from '../Shared/config/general';
 import Alert from '../Shared/Alert';
 import logo from '../Shared/assets/img/logo_placeholder.jpg';
+import dateHelper from '../Shared/helpers/dateHelper';
 
-export default function AddEnterprise({setMode}) {
+export default function AddEnterprise() {
 
     const [formData, setFormData] = useState(new FormData())
     const [error, setError] = useState('');
     const history = useHistory();
+
+    function getExpireDate() {
+        let nextMonth = Date.now() + (30*24*60*60*1000);
+        return dateHelper.getDateFromUts(nextMonth, 'y-m-d');
+    }
 
     function changeHandler(e) {
 
@@ -40,26 +46,43 @@ export default function AddEnterprise({setMode}) {
             setError(result.errors);
         } else {
             setError(null);
+            localStorage.setItem('page', 1);
             history.push('/enterprise');
         }
     }
 
     return(
         <>
-            <h3 className="">Registro de empresa</h3>
+            <Header active="Empresas"/>
 
-            <hr className="py-0"/>
+            <main className="container-xxl">
+                <div className="row">
+                    <div className="col p-4">
+                        
+                        <h3 className="">Registro de empresa</h3>
 
-            {error &&
-                <Alert 
-                    type="error" 
-                    content={error} 
-                    closeButton="true"
-                    unSetError={setError}
-                />
-            }
+                        <hr className="py-0"/>
 
-            <EnterpriseForm changeHandler={changeHandler} submitHandler={submitHandler} logo={logo} setMode={setMode}/>
+                        {error &&
+                            <Alert 
+                                type="error" 
+                                content={error} 
+                                closeButton="true"
+                                unSetError={setError}
+                            />
+                        }
+
+                        <EnterpriseForm 
+                            changeHandler={changeHandler} 
+                            submitHandler={submitHandler} 
+                            logo={logo} 
+                            expireDate={getExpireDate()} 
+                            status={true}
+                        />
+                        
+                    </div>
+                </div>
+            </main>
         </>
     )
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import FileInput from '../Shared/FileInput';
 
-export default function EnterpriseForm({name, logo, expireDate, status, changeHandler, submitHandler, setMode}) {
+export default function EnterpriseForm({name, logo, expireDate, status, changeHandler, submitHandler}) {
 
     return(
         <>
@@ -48,7 +48,6 @@ export default function EnterpriseForm({name, logo, expireDate, status, changeHa
                 </div>
                 <div className="">
                     <button className="btn btn-primary"><i className="fa fa-save"></i> Guardar los cambios </button>
-                    <button className="btn btn-secondary ms-2" onClick={setMode} data-mode="list" ><i className="fa fa-times"></i> Cancelar </button>
                 </div>
             </form>
         </>
