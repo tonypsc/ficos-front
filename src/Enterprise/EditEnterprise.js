@@ -51,8 +51,6 @@ export default function EditEnterprise({id}) {
             const url = `${config.apiUrl}enterprises/${id}`;
             const result = await fetchData(url, 'GET');
 
-console.log(url);
-
             if(result.status !== 'success') {
                 setError(result.errors);
             } else {
@@ -61,7 +59,7 @@ console.log(url);
             }
         }
 
-        getData();
+        if(id) getData();
 
     },[])
 

@@ -26,7 +26,7 @@ export default function Enterprises() {
     }
 
     function handleEditMode(e) {
-        console.log(e.target);
+        console.log(e.target.dataset.id);
         setEditId(e.target.dataset.id);
         setMode('edit');
     }

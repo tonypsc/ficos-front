@@ -48,6 +48,7 @@ export default function EnterpriseForm({name, logo, expireDate, status, changeHa
                 </div>
                 <div className="">
                     <button className="btn btn-primary"><i className="fa fa-save"></i> Guardar los cambios </button>
+                    <button className="btn btn-secondary ms-2" ><i className="fa fa-times"></i> Cancelar </button>
                 </div>
             </form>
         </>
