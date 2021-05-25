@@ -7,7 +7,7 @@ import config from '../Shared/config/general';
 import Alert from '../Shared/Alert';
 import logo from '../Shared/assets/img/logo_placeholder.jpg';
 
-export default function AddEnterprise() {
+export default function AddEnterprise({setMode}) {
 
     const [formData, setFormData] = useState(new FormData())
     const [error, setError] = useState('');
@@ -59,7 +59,7 @@ export default function AddEnterprise() {
                 />
             }
 
-            <EnterpriseForm changeHandler={changeHandler} submitHandler={submitHandler} logo={logo}/>
+            <EnterpriseForm changeHandler={changeHandler} submitHandler={submitHandler} logo={logo} setMode={setMode}/>
         </>
     )
 

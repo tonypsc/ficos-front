@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import config from '../Shared/config/general';
 import dateHelper from '../Shared/helpers/dateHelper';
 
-export default function EnterpriseItem({enterprise, handleDelete, setEditMode}) {
+export default function EnterpriseItem({enterprise, handleDelete, setMode}) {
 
     const {_id, name, logo, status, user, expireDate} = enterprise;
 
@@ -38,7 +38,7 @@ export default function EnterpriseItem({enterprise, handleDelete, setEditMode}) 
                     </small>
                 </div>
                 <div className="mt-2">
-                    <button className="btn btn-success btn-sm" data-id={_id} onClick={setEditMode} ><i className="fa fa-edit"></i> Editar</button>
+                    <button className="btn btn-success btn-sm" data-id={_id} data-mode="edit" onClick={setMode} ><i className="fa fa-edit" data-id={_id} data-mode="edit" onClick={setMode}></i> Editar</button>
                     {/* <Link to={`/enterprise/edit?_id=${_id}&page=${page}&search=${search}`}  className="btn btn-success btn-sm" ><i className="fa fa-edit"></i> Editar</Link> */}
                     <button className="btn btn-orange btn-sm ms-2" data-id={_id} onClick={handleDelete} ><i className="fa fa-times"></i> Eliminar</button>
                 </div>

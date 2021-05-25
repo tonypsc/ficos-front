@@ -17,22 +17,17 @@ export default function Enterprises() {
     const getContent = ()=> {
         switch(mode) {
             case 'add':
-                return(<AddEnterprise />);
+                return(<AddEnterprise setMode={handleMode} />);
             case 'edit':
-                return(<EditEnterprise id={editId} />)
+                return(<EditEnterprise id={editId} setMode={handleMode} />)
             default:
-                return(<EnterpriseList setEditMode={handleEditMode} setAddMode={handleAddMode}/>)
+                return(<EnterpriseList setMode={handleMode}/>)
         }
     }
 
-    function handleEditMode(e) {
-        console.log(e.target.dataset.id);
+    function handleMode(e) {
         setEditId(e.target.dataset.id);
-        setMode('edit');
-    }
-
-    function handleAddMode(e) {
-        setMode('add');
+        setMode(e.target.dataset.mode);
     }
 
     return(

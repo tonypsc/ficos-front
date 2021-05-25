@@ -5,7 +5,7 @@ import config from '../Shared/config/general';
 import Alert from '../Shared/Alert';
 import dateHelper from '../Shared/helpers/dateHelper';
 
-export default function EditEnterprise({id}) {
+export default function EditEnterprise({id, setMode}) {
 
     const [formData, setFormData] = useState({})
     const [itemData, setItemData] = useState({});
@@ -27,7 +27,6 @@ export default function EditEnterprise({id}) {
         const htmlFormData = new FormData();
 
         if(Object.keys(formData).length !== 0) {
-            
             htmlFormData.append('_id', id);
 
             for(let item in formData) {
@@ -44,6 +43,8 @@ export default function EditEnterprise({id}) {
             }
         } else {
         }
+        
+        setMode();
     }
 
     useEffect(() => {
@@ -85,6 +86,7 @@ export default function EditEnterprise({id}) {
                 name={itemData.name} 
                 expireDate={itemData.expireDate}
                 status={itemData.status}
+                setMode={setMode}
             />
             
         </>

@@ -11,7 +11,7 @@ import { useLocation } from 'react-router-dom';
 import EnterpriseItem from './EnterpriseItem';
 import Pagination from '../Shared/Pagination';
 
-export default function Enterprises({setEditMode, setAddMode}) {
+export default function Enterprises({setMode}) {
     
     const [search, setSearch] = useState('');
     const [searchTemp, setSearchTemp] = useState('');
@@ -92,7 +92,7 @@ export default function Enterprises({setEditMode, setAddMode}) {
                     </form>
                 </div>
                 <div className="" style={{width: "130px"}}>
-                    <button onClick={setAddMode} className="btn btn-primary w-100"> <i className="fa fa-plus"></i> Agregar</button>
+                    <button onClick={setMode} data-mode="add" className="btn btn-primary w-100"> <i className="fa fa-plus"></i> Agregar</button>
                 </div>
             </div>
 
@@ -108,7 +108,7 @@ export default function Enterprises({setEditMode, setAddMode}) {
                 ?
                     <>
                         {enterprisesList.map(e => (
-                            <EnterpriseItem enterprise={e} key={e._id} handleDelete={handleDelete} setEditMode={setEditMode}/>
+                            <EnterpriseItem enterprise={e} key={e._id} handleDelete={handleDelete} setMode={setMode}/>
                         ))}
                         <Pagination page={page} total={totalRecords} url={config.apiUrl + 'enterprise'} handleClick={handlePaginationClick} />
                    </>
