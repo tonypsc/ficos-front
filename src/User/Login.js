@@ -21,7 +21,7 @@ export default function Login() {
         const result = await fetchData(url, 'POST', formData);
         
         if(result.status !== 'success') {
-            setError(result.errors[0]);
+            setError(result.errors);
         } else {
             setError(null);
             localStorage.setItem('token', result.token);
