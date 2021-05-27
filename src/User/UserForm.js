@@ -50,38 +50,46 @@ export default function UserForm({userName, fullName, photo, email, status, ente
                         maxLength="500"
                     />
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="rol" className="form-label">Rol</label>
-                    <select 
-                        name="rol" 
-                        id="rol" 
-                        className="form-control" 
-                        defaultValue={rol} 
-                        onChange={changeHandler}
-                        required
-                    >
-                        <option value="user">Usuario</option>
-                        <option value="admin">Administrador</option>
-                    </select>
-                </div>
-                <div className={`mb-3 ${enterprises.length > 0 ? 'visible' : 'invisible'}`}>
-                    <label htmlFor="enterpriseId" className="form-label">Empresa</label>
-                    <select 
-                        name="enterpriseId" 
-                        id="enterpriseId" 
-                        className="form-control" 
-                        defaultValue={enterpriseId} 
-                        onChange={changeHandler}
-                        required
-                    >
-                        {
-                            enterprises.map(el=> (
-                                <option key={el._id} value={el._id}>{el.name}</option>
-                            ))
-
-                        }
-                    </select>
-                </div>
+                {
+                    userName !== JSON.parse(localStorage.getItem('user')).userName
+                        &&
+                        <div className={`mb-3`}>
+                            <label htmlFor="rol" className="form-label">Rol</label>
+                            <select 
+                                name="rol" 
+                                id="rol" 
+                                className="form-control" 
+                                defaultValue={rol} 
+                                onChange={changeHandler}
+                                required
+                            >
+                                <option value="user">Usuario</option>
+                                <option value="admin">Administrador</option>
+                            </select>
+                        </div>
+                }
+                {
+                    enterprises.length > 1
+                        &&
+                        <div className={`mb-3 ${enterprises.length > 1 ? '' : 'd-none'}`}>
+                            <label htmlFor="enterpriseId" className="form-label">Empresa</label>
+                            <select 
+                                name="enterpriseId" 
+                                id="enterpriseId" 
+                                className="form-control" 
+                                defaultValue={enterpriseId} 
+                                onChange={changeHandler}
+                                required
+                            >
+                                {
+                                    enterprises.map(el=> (
+                                        <option key={el._id} value={el._id}>{el.name}</option>
+                                    ))
+        
+                                }
+                            </select>
+                        </div>
+                }
                 {   !userName
                         &&
                             <>

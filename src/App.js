@@ -12,6 +12,7 @@ import EditEnterprise from './Enterprise/EditEnterprise';
 import User from './User/User';
 import AddUser from './User/AddUser';
 import EditUser from './User/EditUser';
+import Profile from './User/Profile';
 
 
 const App = () => (
@@ -34,6 +35,7 @@ const App = () => (
       <PrivateRoute exact path={"/user"} component={User} /> 
       <PrivateRoute exact path={"/user/add"} component={AddUser} /> 
       <PrivateRoute exact path={"/user/edit"} component={EditUser} /> 
+      <PrivateRoute exact path={"/user/profile"} component={Profile} /> 
       <Route component={Login} />
     </Switch>
   </BrowserRouter>

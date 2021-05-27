@@ -48,14 +48,9 @@ const Header = ({active}) => {
 
                         <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li>
-                                <a className="dropdown-item" href="/">
+                                <Link className="dropdown-item" to={'/user/profile'}>
                                     <i className="fa fa-user"></i> Perfil
-                                </a>
-                            </li>
-                            <li>
-                                <a className="dropdown-item" href="/">
-                                    <i className="fa fa-key"></i> Contraseña
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <Link className="dropdown-item" to="/logout">

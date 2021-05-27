@@ -54,8 +54,6 @@ export default function EditUser() {
 
             const result = await fetchData(url, 'GET');
 
-            console.log(result);
-
             if(result.status !== 'success') {
                 setError(result.errors);
             } else {
@@ -100,8 +98,6 @@ export default function EditUser() {
 
         const result = await fetchData(url, 'POST', form);
 
-        console.log(result);
-
         if(result.status !== 'success') {
             setError(result.errors);
         } else {
@@ -144,7 +140,7 @@ export default function EditUser() {
                                         </a>
                                         <a className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
                                             <i className="fa fa-key me-2"></i>
-                                            Cambiar contraseña
+                                            Contraseña
                                         </a>
                                     </div>
                                 </nav>
