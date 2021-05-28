@@ -1,15 +1,12 @@
 export default {
     'menu': {
         'user' : [
-            {caption: 'Inicio', link: 'home'},
             {caption: 'Fichas de costo', link: 'costsheet'},
-            {caption: 'Elementos', link: 'element'},
-            {caption: 'Configuración', link: 'configuration'},
+            {caption: 'Elementos', link: 'costelement'},
         ],
         'admin' : [
-            {caption: 'Inicio', link: 'home'},
             {caption: 'Fichas de costo', link: 'costsheet'},
-            {caption: 'Elementos', link: 'element'},
+            {caption: 'Elementos', link: 'costelement'},
             {caption: 'Configuración', link: 'configuration'},
             {caption: 'Usuarios', link: 'user'},
         ],

@@ -14,7 +14,7 @@ export default function UserItem({data, handleDelete, page, search}) {
                 <img src={config.apiUrl + 'uploads/' + photo } alt="photo" style={{width: "100%"}} onError={(e)=> e.target.src=require('../Shared/assets/img/user.png').default} className="rounded-circle" />
             </div>
             <div className="col">
-                <h5>{fullName}</h5>
+                <Link to={`/user/edit?_id=${_id}&page=${page}&search=${search}`} > <h5>{fullName}</h5></Link>
                 <div className="text-muted">
                     <small>
                         <i className="fa fa-user me-1"></i> 

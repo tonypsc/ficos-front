@@ -1,45 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import ElementCard from './ElementCard';
 
-export default function ElementCardList({search}) {
-
-    const defaultValue = [
-        {
-            name: 'Azucar refino',
-            mu: 'lb',
-            price: '478.36'
-        },
-        {
-            name: 'Arroz blanco',
-            mu: 'kg',
-            price: '11.25'
-        },
-        {
-            name: 'Carne de cerdo limpia',
-            mu: 'kg',
-            price: '50.25'
-        },
-    ]
-
-    const [elements, setElements] = useState(defaultValue);
-
-    useEffect(e => {
-        setElements(defaultValue);
-
-        if(search) {
-            let found = elements.filter(el => el.name.includes(search));
-            setElements(found);
-        }
-    },[]);
+export default function ElementCardList({elements, editHandle, deleteHandle}) {
 
     return(
-        elements.map((el, index) => 
+        elements.map((el) => 
             <ElementCard 
-                key={index}
+                key={el._id}
                 name={el.name}
-                mu={el.mu}
+                measureUnit={el.measureUnit}
                 price={el.price}
-                index={index}
+                status={el.status}
+                _id={el._id}
+                editHandle={editHandle}
             />
         )
     );

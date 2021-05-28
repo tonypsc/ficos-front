@@ -117,7 +117,7 @@ export default function User() {
 
                         
                         {error
-                            ?   <Alert content={error} />
+                            ?   <Alert type="danger" content={error} />
                             : 
                                     data 
                                         ?

@@ -13,6 +13,7 @@ import User from './User/User';
 import AddUser from './User/AddUser';
 import EditUser from './User/EditUser';
 import Profile from './User/Profile';
+import Configuration from './Configuration/Configuration';
 
 
 const App = () => (
@@ -36,6 +37,7 @@ const App = () => (
       <PrivateRoute exact path={"/user/add"} component={AddUser} /> 
       <PrivateRoute exact path={"/user/edit"} component={EditUser} /> 
       <PrivateRoute exact path={"/user/profile"} component={Profile} /> 
+      <PrivateRoute exact path={"/configuration"} component={Configuration} /> 
       <Route component={Login} />
     </Switch>
   </BrowserRouter>
