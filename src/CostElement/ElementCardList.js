@@ -13,6 +13,7 @@ export default function ElementCardList({elements, editHandle, deleteHandle}) {
                 status={el.status}
                 _id={el._id}
                 editHandle={editHandle}
+                deleteHandle={deleteHandle}
             />
         )
     );

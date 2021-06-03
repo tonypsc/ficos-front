@@ -9,6 +9,7 @@ import Alert from '../Shared/Alert';
 import Pagination from '../Shared/Pagination';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import swal from 'sweetalert';
 
 const CostElement = () => {
     
@@ -23,6 +24,9 @@ const CostElement = () => {
     const [showModal, setShowModal] = useState(false);
     const [modalCaption, setModalCaption] = useState('Nuevo elemento');
     const [modalErorr, setModalError] = useState(null);
+
+    const [units, setUnits] = useState(null);
+    const [elementNames, setElementNames] = useState(null);
 
     const getData = async () => {
         const url = `${config.apiUrl}elements?search=${search}&page=${page}&limit=${config.itemsPerPage}`;
@@ -39,7 +43,40 @@ const CostElement = () => {
 
     useEffect(()=> {
         getData();
-    },[])    
+    },[search, page])    
+
+    useEffect(() => {
+        const getUnits = async () => {
+            const url = `${config.apiUrl}measureunits`;
+            const result = await fetchData(url);
+    
+            if(result?.status !== 'success') {
+                setError(result.errors);
+            } else {
+                setError(null);
+                setUnits(result.data.items);
+            }
+        }
+
+        getUnits();
+
+        const getElementNames = async () => {
+            const url = `${config.apiUrl}elements/names`;
+   
+            const result = await fetchData(url);
+    
+            if(result?.status !== 'success') {
+                setError(result.errors);
+            } else {
+                setError(null);
+                setElementNames(result.data);
+            }
+        }
+
+        getElementNames();
+
+    }, [])
+
 
     function searchChangeHandler(e) {
         setSearchTemp(e.target.value);
@@ -67,9 +104,6 @@ const CostElement = () => {
 
     async function handleSubmit(e) {
         e.preventDefault();
-
-        console.log('del formulario', formData);
-
         const url = config.apiUrl + 'elements';
         const method = formData._id===null ? 'POST' : 'PATCH';
 
@@ -94,6 +128,30 @@ const CostElement = () => {
     }
 
     const handleCloseModal = () =>  setShowModal(false);
+
+    function handleDelete(e) {
+        swal({
+            title: "¿Esta seguro que desea eliminar este elemento?",
+            text: "¡Una vez eliminado no podrá ser recuperado!",
+            icon: "warning",
+            buttons: ['Cancelar', 'Eliminar'],
+            dangerMode: true,       
+        })
+        .then(async (ok) => {
+            if(!ok) return;
+            
+            const url = `${config.apiUrl}elements/${e.target.dataset.id}`;
+
+            const result = await fetchData(url, 'DELETE')
+            
+            if(result?.status !== 'success') {
+                setError(result.errors);
+            } else {
+                setError(null);
+                getData();
+            }
+        })
+    }
 
     return(
         <>
@@ -137,7 +195,7 @@ const CostElement = () => {
                                 ? data.length === 0
                                     ? config.messages.noRecords
                                     : <>
-                                        <ElementCardList search={search} elements={data} editHandle={handleShowModal}/>
+                                        <ElementCardList search={search} elements={data} editHandle={handleShowModal} deleteHandle={handleDelete}/>
                                         <Pagination page={page} total={totalRecords} handleClick={handlePaginationClick} /> 
                                       </>
                                 : <Loading />
@@ -162,32 +220,34 @@ const CostElement = () => {
                         <input 
                             type="text" 
                             name="name"
-                            list="browsers" 
+                            list="elementnames" 
                             className="form-control" 
                             autoFocus
                             value={formData.name || ''}
                             onChange={handleChange}
                         />
-                        <datalist id="browsers">
-                            <option value="Internet Explorer" />
-                            <option value="Firefox" />
-                            <option value="Chrome" />
-                            <option value="Opera" />
-                            <option value="Safari" />
+                        <datalist id="elementnames">
+                            { elementNames &&
+                                    elementNames.map(e => <option value={e._id} key={e._id} />)
+                            }
                         </datalist>                        
                     </div>
                     <div className="mb-3">
                         <label htmlFor="measure" className="form-label">UM</label>
-                        <select 
-                            name="measureUnit" 
-                            id="measureUnit" 
-                            className="form-select"
-                            onChange={handleChange}
+                        <input 
+                            type="text" 
+                            name="measureUnit"
+                            list="units" 
+                            className="form-control" 
+                            autoFocus
                             value={formData.measureUnit || ''}
-                        >
-                            <option>alguna</option>
-                            <option>otra</option>
-                        </select>
+                            onChange={handleChange}
+                        />
+                        <datalist id="units">
+                            { units &&
+                                units.map(u => <option value={u.name} key={u._id} />)
+                            }
+                        </datalist>                        
                     </div>
                     <div className="mb-3">
                         <label htmlFor="price" className="form-label">Precio</label>
