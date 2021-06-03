@@ -13,7 +13,7 @@ export default function ElementCard({_id, name, measureUnit, price, status, edit
                 {`${name} (${measureUnit})`}
             </div>
             <div className="col-auto text-end">
-                ${price}
+                ${price.toFixed(2)}
             </div>
             <div className="text-end" style={{width: "70px"}}>
                 <i className="fa fa-edit text-success cursor-pointer" onClick={()=>editHandle({_id, name, measureUnit, price, status})}></i>

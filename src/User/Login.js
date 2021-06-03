@@ -25,6 +25,7 @@ export default function Login() {
         } else {
             setError(null);
             localStorage.setItem('token', result.token);
+            sessionStorage.setItem('token', result.token);
             localStorage.setItem('user', JSON.stringify(result.data));
             
             // sa goes to enterprises

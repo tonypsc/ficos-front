@@ -1,6 +1,15 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
+import Alert from '../Shared/Alert';
 
-export default function ElementModal({name, measureUnit, price, status, handleChange, handleSubmit}) {
+export default function ElementModal({name, measureUnit, price, status, handleChange, handleSubmit, show, error}) {
+
+    const refCloseBtn = useRef();
+
+    useEffect(()=>{
+        console.log(show + '  ddd');
+        if(!show)
+            refCloseBtn.current.click();
+    },[show])
 
     return(
         <div className="modal fade" id="editModal" tabIndex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -8,10 +17,13 @@ export default function ElementModal({name, measureUnit, price, status, handleCh
                 <div className="modal-content">
                     <div className="modal-header">
                     <h5 className="modal-title" id="editModalLabel">Detalles</h5>
-                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ref={refCloseBtn}></button>
                     </div>
                     <form onSubmit={handleSubmit}>
                         <div className="modal-body">
+                                { error &&
+                                    <Alert type="danger" content={error}/>
+                                }
                                 <div className="mb-3">
                                     <label htmlFor="name" className="form-label">Nombre </label>
                                     <input 

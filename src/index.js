@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '@popperjs/core';
-import 'bootstrap/dist/js/bootstrap.min.js';
+//import '@popperjs/core';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './Shared/assets/css/main.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
