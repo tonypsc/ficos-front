@@ -79,9 +79,8 @@ export default function Profile() {
                 <div className="row">
                     <div className="col p-4">
                         
-                        <h3 className="">Perfil de usuario</h3> <span className="text-muted">({user?.userName || ''})</span>
-
-                        <hr className="py-0"/>
+                        <h3 className="mb-1">Perfil de usuario</h3> <span className="text-muted">({user?.userName || ''})</span>
+                        <p className="mb-3"></p>
 
                         {error &&
                             <Alert 

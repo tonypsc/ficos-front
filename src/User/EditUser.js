@@ -115,8 +115,8 @@ export default function EditUser() {
                 <div className="row">
                     <div className="col p-4">
                         
-                        <h3 className="d-inline">Edición de usuario</h3> <span className="text-muted">({user?.fullName || ''})</span>
-                        <p className="mb-4"></p>
+                        <h3 className="mb-0">Edición de usuario</h3> <span className="text-muted">({user?.fullName || ''})</span>
+                        <p className="mb-3"></p>
 
                         {error &&
                             <Alert 
