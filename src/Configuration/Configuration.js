@@ -105,6 +105,8 @@ const Configuration = props => {
                                 daysLeft={formData.daysLeft}
                                 limitPrice={formData.limitPrice}
                                 newSheetsPublic={formData.newSheetsPublic}
+                                comercialMargin={formData.comercialMargin}
+                                salesTaxes={formData.salesTaxes}
                                 changeHandler={changeHandler}
                                 submitHandler={submitHandler}
                             />

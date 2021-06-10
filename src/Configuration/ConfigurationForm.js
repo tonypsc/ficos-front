@@ -1,7 +1,7 @@
 import React from 'react';
 import FileInput from '../Shared/FileInput';
 
-export default function ConfigurationForm({name, logo, expireDate, limitPrice, newSheetsPublic, daysLeft, changeHandler, submitHandler}) {
+export default function ConfigurationForm({name, logo, expireDate, limitPrice, newSheetsPublic, comercialMargin, salesTaxes, daysLeft, changeHandler, submitHandler}) {
 
     return(
         <>
@@ -32,6 +32,34 @@ export default function ConfigurationForm({name, logo, expireDate, limitPrice, n
                                 autoFocus
                                 defaultValue={name} 
                                 onChange={changeHandler}
+                            />
+                        </div>
+
+                        <div className="mb-3">
+                            <label htmlFor="comercialMargin" className="form-label">Margen comercial (%)</label>
+                            <input 
+                                type="number" 
+                                name="comercialMargin"
+                                className="form-control" 
+                                autoFocus
+                                defaultValue={comercialMargin} 
+                                onChange={changeHandler}
+                                max="100"
+                                min="0"
+                            />
+                        </div>
+
+                        <div className="mb-3">
+                            <label htmlFor="salesTaxes" className="form-label">Impuesto sobre las ventas (%)</label>
+                            <input 
+                                type="number" 
+                                name="salesTaxes"
+                                className="form-control" 
+                                autoFocus
+                                defaultValue={salesTaxes} 
+                                onChange={changeHandler}
+                                max="100"
+                                min="0"
                             />
                         </div>
 

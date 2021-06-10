@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import {Link} from 'react-router-dom';
 import FilterSet from '../Shared/FilterSet';
 import Header from '../Shared/Header';
 import SearchBox from '../Shared/SearchBox';
-import CostSheetCard from './CostSheetCard';
 import CostSheetCardList from './CostSheetCardList';
+import config from '../Shared/config/general';
 
 const CostSheet = () => {
     
@@ -59,7 +60,7 @@ const CostSheet = () => {
                                 </form>
                             </div>
                             <div className="" style={{width: "130px"}}>
-                                <button type="submit" className="btn btn-primary w-100"> <i className="fa fa-plus"></i> Agregar</button>
+                                <Link to="/costsheet/edit?_id=new" className="btn btn-primary w-100"> <i className="fa fa-plus"></i> Agregar</Link>
                             </div>
                         </div>
                     

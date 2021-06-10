@@ -63,7 +63,6 @@ const Header = ({active}) => {
                 </div>
             </nav>
         </header>
-
         </>
     )
 }

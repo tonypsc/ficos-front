@@ -258,6 +258,8 @@ const CostElement = () => {
                             className="form-control" 
                             onChange={handleChange}
                             value={formData.price || '0'}
+                            max={Number.MAX_VALUE}
+                            min={0}
                         />
                     </div>
                     <div className="mb-3">

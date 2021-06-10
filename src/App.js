@@ -14,7 +14,7 @@ import AddUser from './User/AddUser';
 import EditUser from './User/EditUser';
 import Profile from './User/Profile';
 import Configuration from './Configuration/Configuration';
-
+import EditCostSheet from './CostSheet/EditCostSheet';
 
 const App = () => (
   <BrowserRouter>
@@ -29,6 +29,7 @@ const App = () => (
         }} 
       /> 
       <PrivateRoute exact path={"/costsheet"} component={CostSheet} /> 
+      <PrivateRoute exact path={"/costsheet/edit"} component={EditCostSheet} /> 
       <PrivateRoute exact path={"/costelement"} component={CostElement} /> 
       <PrivateRoute exact path={"/enterprise"} component={Enterprise} /> 
       <PrivateRoute exact path={"/enterprise/add"} component={AddEnterprise} /> 
