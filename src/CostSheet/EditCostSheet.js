@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {useLocation} from 'react-router-dom';
 import Header from '../Shared/Header';
 import Alert from '../Shared/Alert';
@@ -23,8 +23,10 @@ const EditCostSheet = () => {
             _subTotal: 0,
             _salesTaxes: 0,
             _comercialMargin: 0,
-            _imposedPrice: 0            
+            _imposedPrice: 0,
+            _minoristPrice: 0,
         });
+    
     const [error, setError] = useState('');
 
     const [showModal, setShowModal] = useState(false);
@@ -68,6 +70,21 @@ const EditCostSheet = () => {
 
         getElementNames();
 
+        const getDefaults = async () => {
+            const url = `${config.apiUrl}enterprises/${JSON.parse(localStorage.getItem('user')).enterpriseId}`;
+   
+            const result = await fetchData(url);
+           
+            if(result?.status !== 'success') {
+                setError(result.errors);
+            } else {
+                setError(null);
+                setCostSheet({...costSheet, comercialMargin: result.data.comercialMargin, salesTaxes: result.data.salesTaxes});
+            }
+        }
+
+        getDefaults();
+
     }, [])
 
     // const history = useHistory();
@@ -96,8 +113,11 @@ const EditCostSheet = () => {
         let value = e.target.value;
         if(e.target.type === 'number')             
             value = e.target.value ? e.target.value : 0;
-        
-        setCostSheet({...costSheet, [e.target.name]: value});
+
+        let editCostSheet = {...costSheet, [e.target.name]: Number(value)};
+        editCostSheet = calculateCostSheet(editCostSheet);
+
+        setCostSheet(editCostSheet);
     }
     
     const handleElementSubmit = (e) => {
@@ -114,27 +134,26 @@ const EditCostSheet = () => {
             editCostSheet.elements[elementIndex] = elementFormData;
         }
 
+        editCostSheet = calculateCostSheet(editCostSheet);
+
         setCostSheet(editCostSheet);
-        calculateCostSheet();
         setShowModal(false);
     };
 
-    const calculateCostSheet = () => {
-        let editCostSheet = costSheet;
-        const elements = editCostSheet.elements;
-        let total = 0;
+    const calculateCostSheet = (editCostSheet) => {
+        let total = Number(0);
 
-        for(let el of elements) {
+        for(let el of editCostSheet.elements) {
             total += parseFloat(el.amount);
         }
 
-        editCostSheet._total = total;        
-        editCostSheet._comercialMargin = parseFloat(costSheet.comercialMargin * total / 100).toFixed(2);
-        editCostSheet._subTotal = parseFloat(total + editCostSheet._comercialMargin).toFixed(2);
-        editCostSheet._salesTaxes = parseFloat((total + editCostSheet._comercialMargin) * costSheet.salesTaxes / 100).toFixed(2);
-        editCostSheet._imposedPrice = parseFloat(total + editCostSheet._comercialMargin + editCostSheet._salesTaxes).toFixed(2);
-        //editCostSheet._minoristPrice = parseFloat(total + comercialMargin + salesTaxes).toFixed(2);
-        setCostSheet(editCostSheet);
+        editCostSheet._total = parseFloat(total.toFixed(2));
+        editCostSheet._comercialMargin = parseFloat((editCostSheet.comercialMargin * total / 100).toFixed(2));
+        editCostSheet._subTotal = parseFloat((total + editCostSheet._comercialMargin).toFixed(2));
+        editCostSheet._salesTaxes = parseFloat(((total + editCostSheet._comercialMargin) * editCostSheet.salesTaxes / 100).toFixed(2));
+        editCostSheet._imposedPrice = parseFloat((total + editCostSheet._comercialMargin + editCostSheet._salesTaxes).toFixed(2));
+        editCostSheet._minoristPrice = editCostSheet._imposedPrice;
+        return editCostSheet;
     }
 
     return(
@@ -147,7 +166,7 @@ const EditCostSheet = () => {
 
                         {error &&
                             <Alert 
-                                type="error" 
+                                type="danger" 
                                 content={error} 
                                 closeButton="true"
                                 unSetError={setError}
@@ -182,22 +201,24 @@ const EditCostSheet = () => {
                                 <Col xs={6} className="m-0">
                                     <Form.Group>
                                         <Form.Label>Nombre</Form.Label>
-                                        <Form.Control name="name" type="text" autoFocus/>
+                                        <Form.Control name="name" type="text" autoFocus required maxLength="200"/>
                                     </Form.Group>
                                 </Col>
                                 <Col xs={3} className="m-0 p-0">
                                     <Form.Group>
                                         <Form.Label>Cantidad</Form.Label>
-                                        <Form.Control name="qty" type="number" />
+                                        <Form.Control name="qty" type="number" required min="0" />
                                     </Form.Group>
                                 </Col>
                                 <Col xs={3} className="">
                                     <Form.Group>
                                         <Form.Label>UM</Form.Label>
-                                        <Form.Control name="measureUnit" type="text" list="units" />
+                                        <Form.Control name="measureUnit" type="text" list="units" required />
                                         <datalist id="units">
-                                            <option value="44444" />
-                                        </datalist>
+                                            { units &&
+                                                units.map(u => <option value={u.name} key={u._id} />)
+                                            }
+                                        </datalist>                        
                                     </Form.Group>
                                 </Col>
                             </Row>
@@ -266,7 +287,7 @@ const EditCostSheet = () => {
                                     Total
                                 </Col>
                                 <Col xs={3} className="text-end m-0 py-1">
-                                    {costSheet._total}
+                                    {costSheet._total.toFixed(2)}
                                 </Col>
                             </Row>
                             <Row className="mx-1 fw-bold">
@@ -277,12 +298,12 @@ const EditCostSheet = () => {
                                         name="comercialMargin" 
                                         id="comercialMargin" 
                                         className="costsheet-footer-input ms-1" 
-                                        defaultValue="6" 
+                                        defaultValue={costSheet.comercialMargin} 
                                         onChange={handleCostSheetChange}
                                     /> %
                                 </Col>
                                 <Col xs={3} className="text-end m-0 py-1">
-                                    {costSheet._comercialMargin}
+                                    {costSheet._comercialMargin.toFixed(2)}
                                 </Col>
                             </Row>
                             <Row className="mx-1 fw-bold">
@@ -290,7 +311,7 @@ const EditCostSheet = () => {
                                     Subtotal
                                 </Col>
                                 <Col xs={3} className="text-end m-0 py-1">
-                                    {costSheet._subTotal}
+                                    {costSheet._subTotal.toFixed(2)}
                                 </Col>
                             </Row>
                             <Row className="mx-1 fw-bold">
@@ -298,15 +319,15 @@ const EditCostSheet = () => {
                                     Impuesto s.ventas
                                     <input 
                                         type="text" 
-                                        name="saleTax" 
-                                        id="saleTax" 
+                                        name="salesTaxes" 
+                                        id="salesTaxes" 
                                         className="costsheet-footer-input ms-1" 
-                                        defaultValue="10" 
+                                        defaultValue={costSheet.salesTaxes} 
                                         onChange={handleCostSheetChange}
                                     /> %
                                 </Col>
                                 <Col xs={3} className="text-end m-0 py-1">
-                                    {costSheet._salesTaxes}
+                                    {costSheet._salesTaxes.toFixed(2)}
                                 </Col>
                             </Row>
                             <Row className="mx-1 fw-bold">
@@ -314,7 +335,7 @@ const EditCostSheet = () => {
                                     Precio impuesto
                                 </Col>
                                 <Col xs={3} className="text-end m-0 py-1">
-                                    {costSheet._imposedPrice}
+                                    {costSheet._imposedPrice.toFixed(2)}
                                 </Col>
                             </Row>
                             <Row className="mx-1 fw-bold">
@@ -327,6 +348,7 @@ const EditCostSheet = () => {
                                         name="salePrice" 
                                         id="salePrice" 
                                         className="text-end" 
+                                        value={costSheet._minoristPrice.toFixed(2)}
                                     />
                                 </Col>
                             </Row>
