@@ -17,7 +17,7 @@ export default {
     },
     apiUrl: 'http://localhost:3002/',
     paginationSize: 8, // Pages to show to left or right of current page
-    itemsPerPage: 4,
+    itemsPerPage: 10,
     messages: {
         noRecords: 'No se encontraron registros...'
     }

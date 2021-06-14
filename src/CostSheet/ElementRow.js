@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ElementRow = ({ elementData }) => {
+const ElementRow = ({ elementData, handleEdit, handleDelete }) => {
     
     const {name, measureUnit, qty, price, amount } = elementData;
     
@@ -12,8 +12,16 @@ const ElementRow = ({ elementData }) => {
                         {name}
                     </div>
                     <div className="py-1 text-end" style={{width: "100px"}}>
-                        <i className="fa fa-edit cursor-pointer text-success" title="Editar"></i>
-                        <i className="fa fa-times-circle ms-2 cursor-pointer text-danger" title="Eliminar"></i>
+                        <i 
+                            className="fa fa-edit cursor-pointer text-success" 
+                            title="Editar" 
+                            onClick={()=>handleEdit(elementData)}
+                        ></i>
+                        <i 
+                            className="fa fa-times-circle ms-2 cursor-pointer text-danger" 
+                            title="Eliminar" 
+                            onClick={() => handleDelete(elementData._id)}
+                        ></i>
                     </div>
                 </div>
             </div>
