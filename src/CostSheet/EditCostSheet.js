@@ -25,8 +25,8 @@ const EditCostSheet = () => {
             _salesTaxes: 0,
             _comercialMargin: 0,
             _imposedPrice: 0,
-            _minoristPrice: 0,
-            owner: user,
+            minoristPrice: 0,
+            owner: {_id: user._id, fullName: user.fullName, enterpriseName: user.enterpriseName},
             name: 'Nueva ficha de costo',
             photo: 'nada'
         });
@@ -76,8 +76,7 @@ const EditCostSheet = () => {
                 setError(result.errors);
             } else {
                 setError(null);
-                //setCategories(result.data.items);
-                setCategories([{name:'alguna'}])
+                setCategories(result.data);
             }
         }
 
@@ -298,7 +297,7 @@ const EditCostSheet = () => {
         editCostSheet._subTotal = parseFloat((total + editCostSheet._comercialMargin).toFixed(2));
         editCostSheet._salesTaxes = parseFloat(((total + editCostSheet._comercialMargin) * editCostSheet.salesTaxes / 100).toFixed(2));
         editCostSheet._imposedPrice = parseFloat((total + editCostSheet._comercialMargin + editCostSheet._salesTaxes).toFixed(2));
-        editCostSheet._minoristPrice = editCostSheet._imposedPrice;
+        //editCostSheet.minoristPrice = editCostSheet._imposedPrice;
         return editCostSheet;
     }
 
@@ -315,7 +314,12 @@ const EditCostSheet = () => {
         }
 
         if(costSheet._imposedPrice <= 0){
-            setError('Revise, el importe de la ficha de costo no puede ser cero.');
+            setError('Revise... el importe de la ficha de costo no puede ser cero.');
+            return;
+        }
+
+        if(!costSheet.minoristPrice || costSheet.minoristPrice <= 0) {
+            setError('Revise... el precio minorista debe ser mayor que cero.');
             return;
         }
 
@@ -551,12 +555,12 @@ const EditCostSheet = () => {
                                 <Col xs={3} className="text-end m-0 py-1">
                                     <input 
                                         type="text" 
-                                        name="salePrice" 
-                                        id="salePrice" 
+                                        name="minoristPrice" 
+                                        id="minoristPrice" 
                                         className="text-end w-100"
                                         style={{maxWidth: "150px"}}
-                                        value={costSheet._minoristPrice.toFixed(2)}
-                                        onChange={()=>(true)}
+                                        value={costSheet.minoristPrice}
+                                        onChange={handleCostSheetChange}
                                     />
                                 </Col>
                             </Row>
