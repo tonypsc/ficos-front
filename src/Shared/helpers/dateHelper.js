@@ -5,6 +5,7 @@ const dateHelper = {
      * @returns string
      */
      getDateFromUts(uts, format = 'd-m-y') {
+        if(!uts) return '';
         let date = new Date(uts);
         const year = date.getFullYear();
         const month = (date.getMonth() + 1).toString().padStart(2, '0');

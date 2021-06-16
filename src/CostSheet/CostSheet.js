@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import FilterSet from '../Shared/FilterSet';
 import Header from '../Shared/Header';
 import SearchBox from '../Shared/SearchBox';
@@ -19,7 +19,8 @@ const CostSheet = () => {
     const [page, setPage] = useState(1);
     const [error, setError] = useState(null);
     const [totalRecords, setTotalRecords] = useState(0);
-    
+    const history = useHistory();
+
     const getData = async ()=> {
         const url = `${config.apiUrl}costsheets?page=${page}&search=${search}&limit=${config.itemsPerPage}`;
         const result = await fetchData(url);
@@ -29,6 +30,7 @@ const CostSheet = () => {
         } else {
             setError(null);
             setCostSheets(result.data.docs);
+            setTotalRecords(result.data.total)
         }
     }
 
@@ -60,6 +62,10 @@ const CostSheet = () => {
         setSearchTemp(e.target.value);
     }
 
+    const handleEdit = ()=>{
+        alert('editing');
+    }
+
     function handleDelete(e) {
         swal({
             title: "¿Esta seguro que desea eliminar este elemento?",
@@ -71,7 +77,7 @@ const CostSheet = () => {
         .then(async (ok) => {
             if(!ok) return;
             
-            const url = `${config.apiUrl}enterprises/${e.target.dataset.id}`;
+            const url = `${config.apiUrl}costsheets/${e.target.dataset.id}`;
 
             const result = await fetchData(url, 'DELETE')
             
@@ -140,8 +146,17 @@ const CostSheet = () => {
                                     costSheets
                                         ?
                                             <>
-                                                <CostSheetCardList sheets={costSheets} />
-                                                <Pagination page={page} total={totalRecords} handleClick={handlePaginationClick} />
+                                                <CostSheetCardList 
+                                                    sheets={costSheets} 
+                                                    handleDelete={handleDelete} 
+                                                    search={search} 
+                                                    page={page} 
+                                                />
+                                                <Pagination 
+                                                    page={page} 
+                                                    total={totalRecords} 
+                                                    handleClick={handlePaginationClick} 
+                                                />
                                             </>
                                         : <Loading />
                         }  

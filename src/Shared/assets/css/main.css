@@ -87,6 +87,23 @@ a {
     text-align: center;    
 }
 
+.no-spin {
+    -moz-appearance: textfield;
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 @media only screen and (min-width : 1024px) {
     #sale_price {
         width: 120px;

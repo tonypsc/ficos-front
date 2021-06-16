@@ -63,7 +63,7 @@ export default function ConfigurationForm({name, logo, expireDate, limitPrice, n
                             />
                         </div>
 
-                        <div className="mb-3 mt-3">
+                        <div className="mb-5 mt-3">
                             <div className="form-check">
                                 <input 
                                     className="form-check-input" 
@@ -77,7 +77,7 @@ export default function ConfigurationForm({name, logo, expireDate, limitPrice, n
                             </div>                    
                         </div>
 
-                        <div className="mb-5">
+                        {/* <div className="mb-5">
                             <div className="form-check">
                                 <input 
                                     className="form-check-input" 
@@ -89,7 +89,7 @@ export default function ConfigurationForm({name, logo, expireDate, limitPrice, n
                                 />
                                 <label className="form-check-label" htmlFor="newSheetsPublic">Crear las nuevas fichas de costo como públicas</label>
                             </div>                    
-                        </div>
+                        </div> */}
 
                         <div className="">
                             <button className="btn btn-primary"><i className="fa fa-save"></i> Guardar los cambios </button>
