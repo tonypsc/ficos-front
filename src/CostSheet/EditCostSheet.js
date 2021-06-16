@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {useLocation, useHistory} from 'react-router-dom';
+import {useLocation, useHistory, Link} from 'react-router-dom';
 import Header from '../Shared/Header';
 import Alert from '../Shared/Alert';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -14,11 +14,13 @@ import config from '../Shared/config/general';
 import {fetchData} from '../Shared/helpers/fetchHelper';
 import swal from 'sweetalert';
 import Loading from '../Shared/Loading';
-
+import ReactPDF from '@react-pdf/renderer';
+import CostSheetPdf from './CostSheetPdf';
 
 const EditCostSheet = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     const photoToggle = useRef();
+    const refForm = useRef();
     
     const [elementFormData, setElementFormData] = useState({})
     const [costSheet, setCostSheet] = useState({
@@ -41,12 +43,11 @@ const EditCostSheet = () => {
     const [units, setUnits] = useState(null);
     const [elementNames, setElementNames] = useState(null);
     const [elements, setElements] = useState(null);
-
-    const [caption, setCaption] = useState('Nueva ficha de costo');
     const location = useLocation();
     const history = useHistory();
 
     const _id = new URLSearchParams(location.search).get('_id');
+    let copy = false;
 
     useEffect(() => {
 
@@ -336,7 +337,7 @@ const EditCostSheet = () => {
         }
 
         const url = `${config.apiUrl}costsheets`;
-        const method = _id==='new' ? 'POST' : 'PATCH';
+        const method = (_id === 'new' || copy) ? 'POST' : 'PATCH';
         
         const result = await fetchData(url, method, costSheet);
 
@@ -345,8 +346,13 @@ const EditCostSheet = () => {
         } else {
             setError(null);
 
-            const page = new URLSearchParams(location.search).get('page');
-            const search = new URLSearchParams(location.search).get('search');
+            let page = 1;
+            let search = '';
+
+            if(method === 'PATCH') {
+                page = new URLSearchParams(location.search).get('page');
+                search = new URLSearchParams(location.search).get('search');
+            }
         
             history.push(`/costsheet?page=${page}&search=${search}`);
         }
@@ -410,7 +416,7 @@ const EditCostSheet = () => {
                         {costSheet !== undefined
                             ?
 
-                                <Form onSubmit={handleCostSheetSubmit}>
+                                <Form onSubmit={handleCostSheetSubmit} ref={refForm}>
                                 <Row>
                                     <Col xs={8}>
                                         <h2>{_id==='new' ? 'Nueva ficha de costo' : 'Editando ficha de costo'}</h2>
@@ -656,18 +662,37 @@ const EditCostSheet = () => {
                                             <button 
                                                 type="submit"
                                                 className="btn btn-success px-3 me-2"
+                                                onClick={()=>{copy = false}}
                                             > 
                                                 <i className="fa fa-save"></i><span className="shorten"> Guardar</span> 
                                             </button>
                                         }
 
-                                        <button type="button" className="btn btn-primary px-3 me-2"> <i className="fa fa-print"></i> <span className="shorten"> Imprimir</span> </button>
+                                        <Link 
+                                            to={`/costsheet/pdf`} 
+                                            className="btn btn-primary px-3 me-2"
+                                            target="_blank" rel="noopener noreferrer"
+                                        > 
+                                            <i className="fa fa-print"></i> 
+                                            <span className="shorten"> Imprimir</span> 
+                                        </Link> 
+
+                                        {/* <button 
+                                            type="button"
+                                            onClick={() => {ReactPDF.render(<CostSheetPdf />, `${__dirname}/example.pdf`)}}
+                                            className="btn btn-primary px-3 me-2"
+                                            target="_blank" rel="noopener noreferrer"
+                                        > 
+                                            <i className="fa fa-print"></i> 
+                                            <span className="shorten"> Imprimir</span> 
+                                        </button> */}
                                         
                                         {_id !== 'new' &&
                                             <button 
-                                                type="button" 
+                                                type="submit" 
                                                 className="btn btn-secondary px-3" 
                                                 data-id={'_new'}
+                                                onClick={()=>{copy = true}}
                                             > 
                                                 <i className="fa fa-paste"></i> <span className="shorten">Guardar copia</span> 
                                             </button>

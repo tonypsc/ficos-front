@@ -4,7 +4,7 @@ import dateHelper from '../Shared/helpers/dateHelper';
 
 export default function CostSheetCard ({sheet, handleDelete, page, search}) {
 
-    const {_id, photo, name, created, owner, _imposedPrice, topPrice, publicSheet } = sheet;
+    const {_id, photo, name, created, owner, _imposedPrice, topPrice, publicSheet, categories } = sheet;
 
     const getImage = (photo) => {
         let result = require(`../Shared/assets/img/sheeticons/default.png`).default;
@@ -27,9 +27,7 @@ export default function CostSheetCard ({sheet, handleDelete, page, search}) {
                 <div className="col pt-4">
                     <h5> <Link to={`/costsheet/edit?_id=${_id}&page=${page}&search=${search}`}>{name}</Link></h5>
                     <div><b>Creado:</b> {dateHelper.getDateFromUts(created, "d-m-y")} <b>Por:</b> {owner?.fullName}</div>
-                    {/*!publicSheet &&
-                        <div className="p-0 m-0 text-muted">Privada</div>
-                    */}
+                    <div className="p-0 m-0">{categories.join(', ')}</div>
                     {(topPrice || topPrice > 0) &&
                         <div className="p-0 m-0"><b>Precio tope:</b> {topPrice.toFixed(2)}</div>
                     }
