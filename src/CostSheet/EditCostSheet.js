@@ -272,11 +272,12 @@ const EditCostSheet = () => {
         let editCostSheet = {};
         
         if(e.target) { // All input but categories select
-            let value = e.target.value;
-            if(e.target.type === 'number')             
-                value = e.target.value ? e.target.value : 0;
+            if(e.target.type === 'number'){
+                editCostSheet = {...costSheet, [e.target.name]: parseFloat(e.target.value)};
+            } else {
+                editCostSheet = {...costSheet, [e.target.name]: e.target.value};
+            }
 
-            editCostSheet = {...costSheet, [e.target.name]: value};
             editCostSheet = calculateCostSheet(editCostSheet);
         } else { // Categories select
             let categories = e.map(el => el.value);
@@ -394,6 +395,13 @@ const EditCostSheet = () => {
         photoToggle.current.src=photo;
         setCostSheet({...costSheet, photo: photoName});
         console.log(photoName);
+    }
+
+    const printSheet = () => {
+        history.push(
+            '/costsheet/pdf',
+            costSheet
+        )
     }
 
     return(
@@ -574,7 +582,7 @@ const EditCostSheet = () => {
                                     <Col xs={9}>
                                         Margen comercial
                                         <input 
-                                            type="text" 
+                                            type="number" 
                                             name="comercialMargin" 
                                             id="comercialMargin" 
                                             className="costsheet-footer-input ms-1" 
@@ -599,7 +607,7 @@ const EditCostSheet = () => {
                                     <Col xs={9}>
                                         Impuesto s.ventas
                                         <input 
-                                            type="text" 
+                                            type="number" 
                                             name="salesTaxes" 
                                             id="salesTaxes" 
                                             className="costsheet-footer-input ms-1" 
@@ -625,7 +633,7 @@ const EditCostSheet = () => {
                                         Precio tope
                                     </Col>
                                     <Col xs={3} className="text-end m-0 py-1">
-                                        <input 
+                                        <input
                                             type="number" 
                                             name="topPrice" 
                                             id="topPrice" 
@@ -668,25 +676,17 @@ const EditCostSheet = () => {
                                             </button>
                                         }
 
-                                        <Link 
-                                            to={`/costsheet/pdf`} 
+                                        <a 
+                                            href={`/costsheet/pdf?_id=${costSheet._id}`} 
                                             className="btn btn-primary px-3 me-2"
                                             target="_blank" rel="noopener noreferrer"
-                                        > 
-                                            <i className="fa fa-print"></i> 
-                                            <span className="shorten"> Imprimir</span> 
-                                        </Link> 
-
-                                        {/* <button 
+                                            onClick={()=> localStorage.setItem('sheet', JSON.stringify(costSheet))}
                                             type="button"
-                                            onClick={() => {ReactPDF.render(<CostSheetPdf />, `${__dirname}/example.pdf`)}}
-                                            className="btn btn-primary px-3 me-2"
-                                            target="_blank" rel="noopener noreferrer"
                                         > 
                                             <i className="fa fa-print"></i> 
                                             <span className="shorten"> Imprimir</span> 
-                                        </button> */}
-                                        
+                                        </a> 
+
                                         {_id !== 'new' &&
                                             <button 
                                                 type="submit" 
