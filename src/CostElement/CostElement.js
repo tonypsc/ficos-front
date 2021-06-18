@@ -165,7 +165,7 @@ const CostElement = () => {
                             <div className="col">
                                 <form onSubmit={searchSubmitHandler}>
                                     <SearchBox 
-                                        placeHolder="Buscar empresas" 
+                                        placeHolder="Buscar elementos" 
                                         handleChange={searchChangeHandler}
                                         handleSubmit = {searchSubmitHandler}
                                     />

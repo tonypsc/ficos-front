@@ -126,10 +126,14 @@ export default function Enterprises() {
                             : 
                                     enterprises
                                         ?
-                                            <>
-                                                <EnterpriseList enterprises={enterprises} handleDelete={handleDelete} page={page} search={search} />
-                                                <Pagination page={page} total={totalRecords} handleClick={handlePaginationClick} />
-                                            </>
+                                            enterprises.length === 0
+                                            ?
+                                                config.messages.noRecords
+                                            :
+                                                <>
+                                                    <EnterpriseList enterprises={enterprises} handleDelete={handleDelete} page={page} search={search} />
+                                                    <Pagination page={page} total={totalRecords} handleClick={handlePaginationClick} />
+                                                </>
                                         : <Loading />
                         }  
                         

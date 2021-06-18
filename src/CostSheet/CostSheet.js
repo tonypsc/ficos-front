@@ -19,11 +19,16 @@ const CostSheet = () => {
     const [page, setPage] = useState(1);
     const [error, setError] = useState(null);
     const [totalRecords, setTotalRecords] = useState(0);
+    const [categories, setCategories] = useState([]);
+    const [categorySize, setCategorySize] = useState(5);
+    const [filter, setFilter] = useState('[]');
     const history = useHistory();
 
     const getData = async ()=> {
-        const url = `${config.apiUrl}costsheets?page=${page}&search=${search}&limit=${config.itemsPerPage}`;
+        const url = `${config.apiUrl}costsheets?page=${page}&search=${search}&limit=${config.itemsPerPage}&filter=${filter}`;
         const result = await fetchData(url);
+
+console.log(result);
 
         if(result?.status !== 'success') {
             setError(result.errors);
@@ -43,11 +48,29 @@ const CostSheet = () => {
             console.log({querySearch});
             setSearch(querySearch);
         }
+
+        /**
+         * Gets the list of categories
+         */
+         const getCategories = async () => {
+            const url = `${config.apiUrl}categories`;
+            const result = await fetchData(url);
+    
+            if(result?.status !== 'success') {
+                setError(result.errors);
+            } else {
+                setError(null);
+                setCategories(result.data);
+            }
+        }
+
+        getCategories();
+
     }, [])
 
     useEffect(() => {
         getData();
-    }, [page, search])
+    }, [page, search, filter])
 
     function handlePaginationClick(e) {
         setPage(e.target.dataset.page);
@@ -62,7 +85,7 @@ const CostSheet = () => {
         setSearchTemp(e.target.value);
     }
 
-    const handleEdit = ()=>{
+    const handleEdit = () => {
         alert('editing');
     }
 
@@ -90,6 +113,26 @@ const CostSheet = () => {
         })
     }
 
+    const handleChangeCategorySize = (e) => {
+        setCategorySize(categorySize * 2);
+    }
+
+    const handleFilter = (e) => {
+        let filterEdit = JSON.parse(filter);
+        let condition = {field:e.target.dataset['field'], value: e.target.dataset['value']};
+
+        if(e.target.checked) {
+            filterEdit.push(condition)
+        } else {
+            const index = filterEdit.findIndex(el => (el.field === condition.field && el.value === condition.value));
+            if(index !== -1) 
+                filterEdit.splice(index, 1);
+        }
+
+       
+        setFilter(JSON.stringify(filterEdit));
+    }
+
     return(
         <>
             <Header active="Fichas de costo"/>
@@ -101,25 +144,76 @@ const CostSheet = () => {
                         <FilterSet
                             listName="Precio"
                             size="6"
-                            elements={["de 0 a 25", "25 a 50", "50 a 100"]}
+                            elements={[
+                                {
+                                    description: "de 0 a 25",
+                                    field: 'price',
+                                    value: '{"min":0, "max":25}'
+                                }, 
+                                {
+                                    description: "de 25 a 50",
+                                    field: 'price',
+                                    value: '{"min":25, "max":50}'
+                                }, 
+                                {
+                                    description: "de 50 a 100",
+                                    field: 'price',
+                                    value: '{"min":50, "max":100}'
+                                }, 
+                            ]}
+                            handleFilter={handleFilter}
+                        />
+
+                        {categories.length > 0 &&
+                            <FilterSet
+                                listName="Categoría"
+                                size={categorySize}
+                                elements={categories.map(cat=>({description: cat.name, field: 'categories', value: cat.name}))}
+                                handleChangeSize={handleChangeCategorySize}
+                                handleFilter={handleFilter}
+                            />
+                        }
+
+                        <FilterSet
+                            listName="Creada por"
+                            size="5"
+                            elements={[
+                                {
+                                    description: JSON.parse(localStorage.getItem('user')).fullName,
+                                    field: 'owner',
+                                    value: JSON.parse(localStorage.getItem('user')).fullName
+                                }, 
+                            ]
+                            }
+                            handleFilter={handleFilter}
                         />
 
                         <FilterSet
-                            listName="Categoría"
+                            listName="Fecha"
                             size="5"
-                            elements={["Comida", "Bebida", "Merienda", "Otros"]}
-                        />
-
-                        <FilterSet
-                            listName="Tipo"
-                            size="5"
-                            elements={["Público", "Privado"]}
-                        />
-
-                        <FilterSet
-                            listName="Creado"
-                            size="5"
-                            elements={["Hoy", "Ayer", "Esta semana", "Este año"]}
+                            elements={[
+                                {
+                                    description: "Hoy",
+                                    field: 'created',
+                                    value: 'today'
+                                }, 
+                                {
+                                    description: "Ayer",
+                                    field: 'created',
+                                    value: 'yesterday'
+                                }, 
+                                {
+                                    description: "Esta semana",
+                                    field: 'created',
+                                    value: 'week'
+                                }, 
+                                {
+                                    description: "Este mes",
+                                    field: 'created',
+                                    value: 'month'
+                                }, 
+                            ]}
+                            handleFilter={handleFilter}
                         />
 
                     </aside>
@@ -127,37 +221,51 @@ const CostSheet = () => {
                     <div className="col p-4">
                         <div className="row">
                             <div className="col">
-                                <form action="#" method="get">
+                                <form onSubmit={handleSubmit}>
                                     <SearchBox 
                                         placeHolder="Buscar fichas de costo" 
                                         handleChange={handleChange}
+                                        handleSubmit = {handleSubmit}
                                     />
                                 </form>
                             </div>
                             <div className="" style={{width: "130px"}}>
-                                <Link to="/costsheet/edit?_id=new" className="btn btn-primary w-100"> <i className="fa fa-plus"></i> Agregar</Link>
+                                <Link 
+                                    to="/costsheet/edit?_id=new" 
+                                    className="btn btn-primary w-100"
+                                > 
+                                    <i className="fa fa-plus"></i> Agregar
+                                </Link>
                             </div>
                         </div>
-                    
+                        
+                        {search &&
+                            <div className="text-muted"><small>Mostrando conincidencias para '{search}'</small></div>
+                        }
+
                         {/* List of sheets */}
                         {error
                             ?   <Alert content={error} />
                             : 
                                     costSheets
                                         ?
-                                            <>
-                                                <CostSheetCardList 
-                                                    sheets={costSheets} 
-                                                    handleDelete={handleDelete} 
-                                                    search={search} 
-                                                    page={page} 
-                                                />
-                                                <Pagination 
-                                                    page={page} 
-                                                    total={totalRecords} 
-                                                    handleClick={handlePaginationClick} 
-                                                />
-                                            </>
+                                            costSheets.length === 0
+                                            ?
+                                                <div className="mt-4">{config.messages.noRecords}</div>
+                                            :
+                                                <>
+                                                    <CostSheetCardList 
+                                                        sheets={costSheets} 
+                                                        handleDelete={handleDelete} 
+                                                        search={search} 
+                                                        page={page} 
+                                                    />
+                                                    <Pagination 
+                                                        page={page} 
+                                                        total={totalRecords} 
+                                                        handleClick={handlePaginationClick} 
+                                                    />
+                                                </>
                                         : <Loading />
                         }  
 

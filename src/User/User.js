@@ -96,7 +96,7 @@ export default function User() {
                             <div className="col">
                                 <form onSubmit={handleSubmit}>
                                     <SearchBox 
-                                        placeHolder="Buscar empresas" 
+                                        placeHolder="Buscar usuarios" 
                                         handleChange={handleChange}
                                         handleSubmit = {handleSubmit}
                                     />
