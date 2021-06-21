@@ -15,7 +15,7 @@ export async function fetchData (url, method = 'GET', body = null, appJson = tru
         }
 
         const res = await fetch(url, options);
-
+        
         return await res.json();
     } catch (err) {
         //return {status: 'error', errors: err.message};

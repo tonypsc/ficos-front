@@ -14,8 +14,10 @@ import config from '../Shared/config/general';
 import {fetchData} from '../Shared/helpers/fetchHelper';
 import swal from 'sweetalert';
 import Loading from '../Shared/Loading';
-import ReactPDF from '@react-pdf/renderer';
+import { BlobProvider } from '@react-pdf/renderer';
 import CostSheetPdf from './CostSheetPdf';
+import ViewSheet from './ViewSheet';
+
 
 const EditCostSheet = () => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -65,7 +67,7 @@ const EditCostSheet = () => {
             } else {
                 setError(null);
                 setCostSheet(result.data);
-                console.log(result.data);
+                localStorage.setItem('sheet', JSON.stringify(result.data));
             }
         }
         
@@ -285,6 +287,7 @@ const EditCostSheet = () => {
         }
 
         setCostSheet(editCostSheet);
+        localStorage.setItem('sheet', JSON.stringify(editCostSheet));
     }
     
     /**
@@ -676,7 +679,9 @@ const EditCostSheet = () => {
                                             </button>
                                         }
 
-                                        <a 
+                                        <ViewSheet costSheet={costSheet} />
+
+                                        {/* <a 
                                             href={`/costsheet/pdf?_id=${costSheet._id}`} 
                                             className="btn btn-primary px-3 me-2"
                                             target="_blank" rel="noopener noreferrer"
@@ -685,7 +690,7 @@ const EditCostSheet = () => {
                                         > 
                                             <i className="fa fa-print"></i> 
                                             <span className="shorten"> Imprimir</span> 
-                                        </a> 
+                                        </a>  */}
 
                                         {_id !== 'new' &&
                                             <button 

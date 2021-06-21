@@ -10,6 +10,7 @@ import swal from 'sweetalert';
 import Pagination from '../Shared/Pagination';
 import Alert from '../Shared/Alert';
 import Loading from '../Shared/Loading';
+import Login from '../User/Login';
 
 const CostSheet = () => {
     
@@ -27,8 +28,6 @@ const CostSheet = () => {
     const getData = async ()=> {
         const url = `${config.apiUrl}costsheets?page=${page}&search=${search}&limit=${config.itemsPerPage}&filter=${filter}`;
         const result = await fetchData(url);
-
-console.log(result);
 
         if(result?.status !== 'success') {
             setError(result.errors);
@@ -65,6 +64,7 @@ console.log(result);
         }
 
         getCategories();
+
 
     }, [])
 
@@ -138,139 +138,141 @@ console.log(result);
             <Header active="Fichas de costo"/>
 
             <main className="container-xxl">
-                <div className="row">
-                    <aside className="vh-100 search-panel p-4 border-end" style={{width: "250px"}}>
-                        
-                        <FilterSet
-                            listName="Precio"
-                            size="6"
-                            elements={[
-                                {
-                                    description: "de 0 a 25",
-                                    field: 'price',
-                                    value: '{"min":0, "max":25}'
-                                }, 
-                                {
-                                    description: "de 25 a 50",
-                                    field: 'price',
-                                    value: '{"min":25, "max":50}'
-                                }, 
-                                {
-                                    description: "de 50 a 100",
-                                    field: 'price',
-                                    value: '{"min":50, "max":100}'
-                                }, 
-                            ]}
-                            handleFilter={handleFilter}
-                        />
+                {error
+                    ?   <div className="mt-5"><Alert content={error} type="danger" /></div>
+                    : 
 
-                        {categories.length > 0 &&
+                    <div className="row">
+                        <aside className="vh-100 search-panel p-4 border-end" style={{width: "250px"}}>
+                            
                             <FilterSet
-                                listName="Categoría"
-                                size={categorySize}
-                                elements={categories.map(cat=>({description: cat.name, field: 'categories', value: cat.name}))}
-                                handleChangeSize={handleChangeCategorySize}
+                                listName="Precio"
+                                size="6"
+                                elements={[
+                                    {
+                                        description: "de 0 a 25",
+                                        field: 'price',
+                                        value: '{"min":0, "max":25}'
+                                    }, 
+                                    {
+                                        description: "de 25 a 50",
+                                        field: 'price',
+                                        value: '{"min":25, "max":50}'
+                                    }, 
+                                    {
+                                        description: "de 50 a 100",
+                                        field: 'price',
+                                        value: '{"min":50, "max":100}'
+                                    }, 
+                                ]}
                                 handleFilter={handleFilter}
                             />
-                        }
 
-                        <FilterSet
-                            listName="Creada por"
-                            size="5"
-                            elements={[
-                                {
-                                    description: JSON.parse(localStorage.getItem('user')).fullName,
-                                    field: 'owner',
-                                    value: JSON.parse(localStorage.getItem('user')).fullName
-                                }, 
-                            ]
+                            {categories.length > 0 &&
+                                <FilterSet
+                                    listName="Categoría"
+                                    size={categorySize}
+                                    elements={categories.map(cat=>({description: cat.name, field: 'categories', value: cat.name}))}
+                                    handleChangeSize={handleChangeCategorySize}
+                                    handleFilter={handleFilter}
+                                />
                             }
-                            handleFilter={handleFilter}
-                        />
 
-                        <FilterSet
-                            listName="Fecha"
-                            size="5"
-                            elements={[
-                                {
-                                    description: "Hoy",
-                                    field: 'created',
-                                    value: 'today'
-                                }, 
-                                {
-                                    description: "Ayer",
-                                    field: 'created',
-                                    value: 'yesterday'
-                                }, 
-                                {
-                                    description: "Esta semana",
-                                    field: 'created',
-                                    value: 'week'
-                                }, 
-                                {
-                                    description: "Este mes",
-                                    field: 'created',
-                                    value: 'month'
-                                }, 
-                            ]}
-                            handleFilter={handleFilter}
-                        />
+                            <FilterSet
+                                listName="Creada por"
+                                size="5"
+                                elements={[
+                                    {
+                                        description: JSON.parse(localStorage.getItem('user')).fullName,
+                                        field: 'owner',
+                                        value: JSON.parse(localStorage.getItem('user')).fullName
+                                    }, 
+                                ]
+                                }
+                                handleFilter={handleFilter}
+                            />
 
-                    </aside>
+                            <FilterSet
+                                listName="Fecha"
+                                size="5"
+                                elements={[
+                                    {
+                                        description: "Hoy",
+                                        field: 'created',
+                                        value: 'today'
+                                    }, 
+                                    {
+                                        description: "Ayer",
+                                        field: 'created',
+                                        value: 'yesterday'
+                                    }, 
+                                    {
+                                        description: "Esta semana",
+                                        field: 'created',
+                                        value: 'week'
+                                    }, 
+                                    {
+                                        description: "Este mes",
+                                        field: 'created',
+                                        value: 'month'
+                                    }, 
+                                ]}
+                                handleFilter={handleFilter}
+                            />
 
-                    <div className="col p-4">
-                        <div className="row">
-                            <div className="col">
-                                <form onSubmit={handleSubmit}>
-                                    <SearchBox 
-                                        placeHolder="Buscar fichas de costo" 
-                                        handleChange={handleChange}
-                                        handleSubmit = {handleSubmit}
-                                    />
-                                </form>
+                        </aside>
+
+                        <div className="col p-4">
+                            <div className="row">
+                                <div className="col">
+                                    <form onSubmit={handleSubmit}>
+                                        <SearchBox 
+                                            placeHolder="Buscar fichas de costo" 
+                                            handleChange={handleChange}
+                                            handleSubmit = {handleSubmit}
+                                        />
+                                    </form>
+                                </div>
+                                <div className="" style={{width: "130px"}}>
+                                    <Link 
+                                        to="/costsheet/edit?_id=new" 
+                                        className="btn btn-primary w-100"
+                                    > 
+                                        <i className="fa fa-plus"></i> Agregar
+                                    </Link>
+                                </div>
                             </div>
-                            <div className="" style={{width: "130px"}}>
-                                <Link 
-                                    to="/costsheet/edit?_id=new" 
-                                    className="btn btn-primary w-100"
-                                > 
-                                    <i className="fa fa-plus"></i> Agregar
-                                </Link>
-                            </div>
-                        </div>
+                            
+                            {search &&
+                                <div className="text-muted"><small>Mostrando conincidencias para '{search}'</small></div>
+                            }
+
+                            {/* List of sheets */}
+                             {costSheets
+                                ?
+                                    costSheets.length === 0
+                                    ?
+                                        <div className="mt-4">{config.messages.noRecords}</div>
+                                    :
+                                        <>
+                                            <CostSheetCardList 
+                                                sheets={costSheets} 
+                                                handleDelete={handleDelete} 
+                                                search={search} 
+                                                page={page} 
+                                            />
+                                            <Pagination 
+                                                page={page} 
+                                                total={totalRecords} 
+                                                handleClick={handlePaginationClick} 
+                                            />
+                                        </>
+                                : <Loading />
                         
-                        {search &&
-                            <div className="text-muted"><small>Mostrando conincidencias para '{search}'</small></div>
-                        }
-
-                        {/* List of sheets */}
-                        {error
-                            ?   <Alert content={error} />
-                            : 
-                                    costSheets
-                                        ?
-                                            costSheets.length === 0
-                                            ?
-                                                <div className="mt-4">{config.messages.noRecords}</div>
-                                            :
-                                                <>
-                                                    <CostSheetCardList 
-                                                        sheets={costSheets} 
-                                                        handleDelete={handleDelete} 
-                                                        search={search} 
-                                                        page={page} 
-                                                    />
-                                                    <Pagination 
-                                                        page={page} 
-                                                        total={totalRecords} 
-                                                        handleClick={handlePaginationClick} 
-                                                    />
-                                                </>
-                                        : <Loading />
-                        }  
-
+                             }
+                        </div>
                     </div>
-                </div>
+                }                
             </main>
         </>
     )

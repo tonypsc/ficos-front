@@ -15,7 +15,6 @@ import EditUser from './User/EditUser';
 import Profile from './User/Profile';
 import Configuration from './Configuration/Configuration';
 import EditCostSheet from './CostSheet/EditCostSheet';
-import Print from './CostSheet/Print';
 
 const App = () => (
   <BrowserRouter>
@@ -29,9 +28,9 @@ const App = () => (
           return(<Login />);
         }} 
       /> 
+      <PrivateRoute exact path={"/"} component={CostSheet} /> 
       <PrivateRoute exact path={"/costsheet"} component={CostSheet} /> 
       <PrivateRoute exact path={"/costsheet/edit"} component={EditCostSheet} /> 
-      <PrivateRoute exact path={"/costsheet/pdf"} component={Print} /> 
       <PrivateRoute exact path={"/costelement"} component={CostElement} /> 
       <PrivateRoute exact path={"/enterprise"} component={Enterprise} /> 
       <PrivateRoute exact path={"/enterprise/add"} component={AddEnterprise} /> 
@@ -45,5 +44,7 @@ const App = () => (
     </Switch>
   </BrowserRouter>
 ) 
+
+
 
 export default App;
