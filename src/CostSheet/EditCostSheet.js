@@ -438,7 +438,7 @@ const EditCostSheet = () => {
                                     <Dropdown alignRight={true}>
                                         <Dropdown.Toggle ref={photoToggle} id="dropdown-basic" as={Image} src={getImage(costSheet.photo)} style={{width: "64px", height: "auto"}} className="mask cursor-pointer" />
 
-                                        <Dropdown.Menu>
+                                        <Dropdown.Menu style={{maxHeight: "400px", overflowY: "scroll"}}>
                                             {
                                                 Object.keys(images).map(i => 
                                                     <Dropdown.Item  
@@ -680,17 +680,6 @@ const EditCostSheet = () => {
                                         }
 
                                         <ViewSheet costSheet={costSheet} />
-
-                                        {/* <a 
-                                            href={`/costsheet/pdf?_id=${costSheet._id}`} 
-                                            className="btn btn-primary px-3 me-2"
-                                            target="_blank" rel="noopener noreferrer"
-                                            onClick={()=> localStorage.setItem('sheet', JSON.stringify(costSheet))}
-                                            type="button"
-                                        > 
-                                            <i className="fa fa-print"></i> 
-                                            <span className="shorten"> Imprimir</span> 
-                                        </a>  */}
 
                                         {_id !== 'new' &&
                                             <button 

@@ -10,7 +10,10 @@ import dateHelper from '../Shared/helpers/dateHelper';
 
 export default function AddEnterprise() {
 
-    const [formData, setFormData] = useState(new FormData())
+    const [formData, setFormData] = useState({
+        expireDate: getExpireDate(),
+        status: 1
+    })
     const [error, setError] = useState('');
     const history = useHistory();
 
@@ -64,7 +67,7 @@ export default function AddEnterprise() {
 
                         {error &&
                             <Alert 
-                                type="error" 
+                                type="danger" 
                                 content={error} 
                                 closeButton="true"
                                 unSetError={setError}

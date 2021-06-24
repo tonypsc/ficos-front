@@ -190,7 +190,7 @@ const CostElement = () => {
                         </div>
 
                         {error
-                            ?   <Alert type="danger" content={error} />
+                            ?  <Alert type="danger" content={error} />
                             :  data 
                                 ? data.length === 0
                                     ? config.messages.noRecords

@@ -171,7 +171,7 @@ const CostSheetPdf = ({costSheet}) => {
                 <View
                   style={{ ...styles.tableCol, width: "15%", textAlign: "right" }}
                 >
-                  <Text> {el.amount && el.amount.toFixed(2)} </Text>
+                  <Text> {el.amount} </Text>
                 </View>
               </View>
   
@@ -224,7 +224,7 @@ const CostSheetPdf = ({costSheet}) => {
               <Text>Precio minorista</Text>
             </View>
             <View style={{ ...styles.tableCol, textAlign: "right" }}>
-              <Text>{costSheet.minoristPrice && costSheet.minoristPrice.toFixed(2)}</Text>
+              <Text>{costSheet.minoristPrice !== undefined && costSheet.minoristPrice.toFixed(2)}</Text>
             </View>
           </View>
         </View>

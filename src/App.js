@@ -17,7 +17,7 @@ import Configuration from './Configuration/Configuration';
 import EditCostSheet from './CostSheet/EditCostSheet';
 
 const App = () => (
-  <BrowserRouter>
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
     <Switch>
       <Route exact path={"/login"} component={Login} /> 
       <Route exact path={"/recoverpwd"} component={RecoverPwd} /> 

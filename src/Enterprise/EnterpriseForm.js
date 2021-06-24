@@ -26,8 +26,8 @@ export default function EnterpriseForm({name, logo, expireDate, status, changeHa
                     <label htmlFor="licence" className="form-label">Licencia vigente hasta</label>
                     <input 
                         type="date" 
-                        name="expire_date" 
-                        id="expire_date" 
+                        name="expireDate" 
+                        id="expireDate" 
                         className="form-control" 
                         defaultValue={expireDate} 
                         onChange={changeHandler}

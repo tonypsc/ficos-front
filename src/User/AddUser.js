@@ -85,7 +85,7 @@ export default function AddUser() {
 
                         {error &&
                             <Alert 
-                                type="error" 
+                                type="danger" 
                                 content={error} 
                                 closeButton="true"
                                 unSetError={setError}

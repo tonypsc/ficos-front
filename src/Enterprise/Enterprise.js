@@ -93,38 +93,37 @@ export default function Enterprises() {
         <>
             <Header active="Empresas" />
 
-            <main className="container-xxl">
-                <div className="row">
-                    <div className="col p-4">
-                        
-                        <div className="row">
-                            <div className="col">
-                                <form onSubmit={handleSubmit}>
-                                    <SearchBox 
-                                        placeHolder="Buscar empresas" 
-                                        handleChange={handleChange}
-                                        handleSubmit = {handleSubmit}
-                                    />
-                                </form>
-                            </div>
-                            <div className="" style={{width: "130px"}}>
-                                <Link to="/enterprise/add" className="btn btn-primary w-100"> <i className="fa fa-plus"></i> Agregar</Link>
-                            </div>
-                        </div>
+            {error
+                ?   <div className="mt-5"><Alert content={error} type="danger" /></div>
+                :   <>
+                        <main className="container-xxl">
+                            <div className="row">
+                                <div className="col p-4">
+                                    
+                                    <div className="row">
+                                        <div className="col">
+                                            <form onSubmit={handleSubmit}>
+                                                <SearchBox 
+                                                    placeHolder="Buscar empresas" 
+                                                    handleChange={handleChange}
+                                                    handleSubmit = {handleSubmit}
+                                                />
+                                            </form>
+                                        </div>
+                                        <div className="" style={{width: "130px"}}>
+                                            <Link to="/enterprise/add" className="btn btn-primary w-100"> <i className="fa fa-plus"></i> Agregar</Link>
+                                        </div>
+                                    </div>
 
-                        {/* title */}
-                        <div className="row">
-                            <div className="col px-3 py-4">
-                                <h4 className="d-inline me-2">Empresas registradas</h4>
-                                <small className="text-muted">{search && `(Mostrando coincidencias para '${search}' )`}</small>
-                            </div>
-                        </div>
+                                    {/* title */}
+                                    <div className="row">
+                                        <div className="col px-3 py-4">
+                                            <h4 className="d-inline me-2">Empresas registradas</h4>
+                                            <small className="text-muted">{search && `(Mostrando coincidencias para '${search}' )`}</small>
+                                        </div>
+                                    </div>
 
-                        
-                        {error
-                            ?   <Alert content={error} />
-                            : 
-                                    enterprises
+                                    { enterprises
                                         ?
                                             enterprises.length === 0
                                             ?
@@ -139,8 +138,9 @@ export default function Enterprises() {
                         
                     </div>
                 </div>
-
             </main>
+            </>
+            }
         </>
     )    
 }

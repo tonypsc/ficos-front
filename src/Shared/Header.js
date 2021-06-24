@@ -41,9 +41,9 @@ const Header = ({active}) => {
                         </a>
                         </li>
                         <li className="nav-item col-6 col-md-auto dropdown">
-                        <a className="nav-link p-2" href="/" id="userDropdown" href="#" data-bs-toggle="dropdown">
-                            <img src={user} alt="" style={{width: "36px", height: "36px"}} title="Antonio" />
-                            <small className="d-md-none ms-2 dropdown-toggle">Antonio</small>
+                        <a className="nav-link p-2" href="/" id="userDropdown" data-bs-toggle="dropdown">
+                            <img src={user} alt="" style={{width: "36px", height: "36px"}} title={JSON.parse(localStorage.getItem('user')).fullName} />
+                            <small className="d-md-none ms-2 dropdown-toggle">{JSON.parse(localStorage.getItem('user')).fullName}</small>
                         </a>
 
                         <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
