@@ -193,6 +193,9 @@ const EditCostSheet = () => {
             editElementFormData = {...elementFormData, [e.target.name]: e.target.value};
         }
 
+        let price = editElementFormData.priceUm / (editElementFormData.rations || 1);
+        editElementFormData.price = Math.round(price*100000)/100000;
+
         editElementFormData.amount = (editElementFormData.price * editElementFormData.qty).toFixed(2);
         
         setElementFormData(editElementFormData);
@@ -238,7 +241,9 @@ const EditCostSheet = () => {
     };
 
     const handleElementSelect = (e) => {
-        let editElementFormData = {...elementFormData, name: e.value.name, measureUnit: e.value.measureUnit, price: e.value.price};
+        let price = e.value.price / (elementFormData.rations || 1);
+        price = Math.round(price*100000)/100000;
+        let editElementFormData = {...elementFormData, name: e.value.name, measureUnit: e.value.measureUnit, priceUm: e.value.price, price: price};
         editElementFormData.amount = (editElementFormData.price * editElementFormData.qty).toFixed(2);
         setElementFormData(editElementFormData);
     }
@@ -562,7 +567,8 @@ const EditCostSheet = () => {
                                                 status: true, 
                                                 price: 0, 
                                                 qty: 0,
-                                                amount: 0
+                                                amount: 0,
+                                                rations: 1
                                             })}
                                         > 
                                             <i className="fa fa-plus" title="Agregar"></i>

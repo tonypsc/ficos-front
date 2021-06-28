@@ -20,7 +20,6 @@ const ElementForm = ({showModal, modalError, formData, elements, elementNames, u
                     <Alert type="danger" content={modalError} width="w-100"/>
                 }
                 <div className="mb-3">
-                    <label htmlFor="select" className="form-label">Seleccionar </label>
                     <ReactSelect 
                         ref={refFocus}
                         name="_" 
@@ -29,6 +28,7 @@ const ElementForm = ({showModal, modalError, formData, elements, elementNames, u
                                     ? elements.map(e => ({value: e, label: `${e.name} (${e.measureUnit}) - $${e.price}`}))
                                     : []
                         }
+                        placeholder= "Seleccionar"
                     />
                 </div>
                 <div className="mb-3">
@@ -70,7 +70,43 @@ const ElementForm = ({showModal, modalError, formData, elements, elementNames, u
                             </datalist>                        
                         </div>    
                         <div className="col">
-                            <label htmlFor="price" className="form-label">Precio</label>
+                            <label htmlFor="priceUm" className="form-label">Precio/UM</label>
+                            <input 
+                                type="number" 
+                                name="priceUm" 
+                                id="priceUm" 
+                                className="form-control" 
+                                onChange={handleElementChange}
+                                value={formData.priceUm}
+                                required
+                                max={Number.MAX_VALUE}
+                                min="0.00001"
+                                step="0.00001"
+                                onFocus={(e)=> e.target.select()}
+                            />
+                        </div>    
+                    </div>
+                </div>
+                <div className="mb-3">
+                    <div className="row">
+                        <div className="col">
+                            <label htmlFor="rations" className="form-label">Raciones</label>
+                            <input 
+                                type="number" 
+                                name="rations" 
+                                id="rations" 
+                                className="form-control" 
+                                onChange={handleElementChange}
+                                value={formData.rations}
+                                required
+                                max={Number.MAX_VALUE}
+                                min="0.00001"
+                                step="0.00001"
+                                onFocus={(e)=> e.target.select()}
+                            />
+                        </div>
+                        <div className="col">
+                            <label htmlFor="price" className="form-label">Precio/Ración</label>
                             <input 
                                 type="number" 
                                 name="price" 
@@ -83,12 +119,12 @@ const ElementForm = ({showModal, modalError, formData, elements, elementNames, u
                                 min="0.00001"
                                 step="0.00001"
                                 onFocus={(e)=> e.target.select()}
+                                disabled
                             />
                         </div>    
                     </div>
                 </div>
                 <div className="mb-3">
-
                     <div className="row">
                         <div className="col">
                             <label htmlFor="qty" className="form-label">Cantidad</label>
