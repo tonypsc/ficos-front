@@ -41,7 +41,6 @@ export default function ConfigurationForm({name, logo, expireDate, limitPrice, n
                                 type="number" 
                                 name="comercialMargin"
                                 className="form-control" 
-                                autoFocus
                                 defaultValue={comercialMargin} 
                                 onChange={changeHandler}
                                 max="100"
@@ -55,7 +54,6 @@ export default function ConfigurationForm({name, logo, expireDate, limitPrice, n
                                 type="number" 
                                 name="salesTaxes"
                                 className="form-control" 
-                                autoFocus
                                 defaultValue={salesTaxes} 
                                 onChange={changeHandler}
                                 max="100"

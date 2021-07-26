@@ -18,7 +18,7 @@ const ElementRow = ({ elementData, handleEdit, handleDelete }) => {
                             onClick={()=>handleEdit(elementData)}
                         ></i>
                         <i 
-                            className="fa fa-times-circle ms-2 cursor-pointer text-danger" 
+                            className="fa fa-times-circle ms-2 cursor-pointer text-orange" 
                             title="Eliminar" 
                             onClick={() => handleDelete(elementData._id)}
                         ></i>
